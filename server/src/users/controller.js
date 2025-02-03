@@ -1,0 +1,86 @@
+import { queries } from './queries.js';
+import mysql from 'mysql2/promise';
+
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'ATHLETIXHUB',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+export const getUsers = async (req, res) => {
+    try {
+        const [rows] = await pool.query(queries.getUsers);
+        console.log(rows);
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await pool.query(queries.getUserById, [id]);
+        if (rows.length === 0) return res.status(404).json({ message: 'User not found' });
+        res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getUserByName = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const [rows] = await pool.query(queries.getUserByName, [name]);
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getUserByEmail = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const [rows] = await pool.query(queries.getUserByEmail, [email]);
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const addUser = async (req, res) => {
+    try {
+        const { name, email, phone, password, role, created_at } = req.body;
+        await pool.query(queries.addUser, [name, email, phone, password, role, created_at]);
+        res.status(201).json({ message: 'User added successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, email, phone, password, role } = req.body;
+        const [result] = await pool.query(queries.updateUser, [name, email, phone, password, role, id]);
+        if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
+        res.json({ message: 'User updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [result] = await pool.query(queries.deleteUser, [id]);
+        if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
