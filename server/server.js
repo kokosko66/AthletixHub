@@ -7,6 +7,7 @@ import exerciseRoutes from './src/exercises/routes.js';
 import foodsRoutes from './src/foods/routes.js';
 import mealPlansRoutes from './src/meal_plans/routes.js';
 import userWorkoutsRoutes from './src/user_workouts/routes.js';
+import userMealPlansRoutes from './src/user_meal_plans/routes.js';
 import { conroller } from './src/controller.js';
 
 
@@ -28,7 +29,7 @@ app.use('/api', exerciseRoutes);
 app.use('/api', foodsRoutes);
 app.use('/api', mealPlansRoutes);
 app.use('/api', userWorkoutsRoutes);
-
+app.use('/api', userMealPlansRoutes);
 
 app.post('/api/login', conroller.login);
 app.post('/api/register', conroller.register);
