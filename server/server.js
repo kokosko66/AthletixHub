@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import userRoutes from './src/users/routes.js';
 import workoutRoutes from './src/workouts/routes.js';
 import exerciseRoutes from './src/exercises/routes.js';
+import foodsRoutes from './src/foods/routes.js';
 import { conroller } from './src/controller.js';
 
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/api', userRoutes);
 app.use('/api', workoutRoutes);
 app.use('/api', exerciseRoutes);
+app.use('/api', foodsRoutes);
 
 
 app.post('/api/login', conroller.login);

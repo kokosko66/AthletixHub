@@ -1,11 +1,3 @@
-// const getExercises = 'SELECT * FROM Exercises';
-// const getExercisesById = 'SELECT * FROM Exercises WHERE id = $1';
-// const getExerciseByName = 'SELECT * FROM Exercises WHERE name = $1';
-
-// const addExercise = 'INSERT INTO Exercises (name, repetitions) VALUES ($1, $2)';
-// const updateExercise = 'UPDATE Exercises SET name = $1, repetitions = $2';
-// const deleteExercise = 'DELETE FROM users WHERE id = $1';
-
 import {queries}  from './queries.js';
 import mysql from 'mysql2/promise';
 
