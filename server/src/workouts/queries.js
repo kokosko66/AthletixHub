@@ -1,10 +1,10 @@
-const getWorkouts = 'SELECT * FROM workouts';
-const getWorkoutById = 'SELECT * FROM workouts WHERE id = $1';
-const getWorkoutByName = 'SELECT * FROM workouts WHERE name = $1';
+const getWorkouts = 'SELECT * FROM Workouts';
+const getWorkoutById = 'SELECT * FROM Workouts WHERE id = ?';
+const getWorkoutByName = 'SELECT * FROM Workouts WHERE name = ?';
 
-const addWorkout = 'INSERT INTO workouts (name, created_at) VALUES ($1, $2)';
-const updateWorkout = 'UPDATE workouts SET name = $1 WHERE id = $2';
-const deleteWorkout = 'DELETE FROM workouts WHERE id = $1';
+const addWorkout = 'INSERT INTO Workouts (name, created_at) VALUES (?, ?)';
+const updateWorkout = 'UPDATE Workouts SET name = ? WHERE id = ?';
+const deleteWorkout = 'DELETE FROM Workouts WHERE id = ?';
 
 const queries = {
     getWorkouts,
