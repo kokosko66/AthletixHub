@@ -1,0 +1,143 @@
+.container {
+  background-color: rgb(245, 245, 230);
+  width: 100vw;
+  height: 100vh;
+}
+
+.top-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.dumbbell-icon {
+    width: 55px;
+}
+
+.role-switch {
+    position: relative;
+    display: inline-flex;
+    width: 250px;
+    background: #ddd;
+    border-radius: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  
+.role-button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 2;
+    transition: color 0.3s ease;
+    color: #555;
+  }
+
+
+.role-switch:not(.trainer-active) .role-button:first-child {
+    color: white;
+  }
+  
+.role-switch.trainer-active .role-button:last-child {
+    color: white;
+  }
+  
+.switch-indicator {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(50% - 10px);
+    height: calc(100% - 10px);
+    background: #4CAF50;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  
+.role-switch.trainer-active .switch-indicator {
+    transform: translateX(100%);
+  }
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    background-color: rgb(255,250,250);
+    box-shadow: 8px 8px rgb(65, 65, 65);
+    width: 600px;
+    margin-left: 520px;
+    margin-top: 100px;
+    padding: 20px;
+    font-size: larger;
+}
+
+.register-form label {
+    font-size: large;
+}
+
+.register-form input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: rgb(193, 190, 190);
+    font: bold;
+    font-size: larger;
+}
+
+.register-form input:focus {
+    background-color: rgb(230, 218, 218);
+}
+
+.register-form .profile-button {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 5px;
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: larger;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.register-form .profile-button:hover {
+    cursor: pointer; 
+    transform: translateY(-5px);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    font-size: large;
+    background-color: rgb(193, 190, 190);
+    height: 12vh;
+    width: 100vw;
+}
+
+.if-login {
+  margin-left: 35px;   
+}
+
+.login-link {
+  width: 50%;
+  margin-left: 5px;
+  background: black;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: larger;
+  position: relative;
+  text-decoration: none;
+}
