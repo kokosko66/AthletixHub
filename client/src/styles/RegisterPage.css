@@ -115,13 +115,13 @@
     transform: translateY(-5px);
 }
 
-.footer {
+.register-footer {
     display: flex;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 50px;
     font-size: large;
     background-color: rgb(193, 190, 190);
-    height: 12vh;
+    height: 10vh;
     width: 100vw;
 }
 

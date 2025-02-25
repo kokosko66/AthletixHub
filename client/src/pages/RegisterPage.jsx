@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import dumbbell from '../assets/dumbbell.png';
 import '../styles/RegisterPage.css';
@@ -50,11 +51,11 @@ export default function Loginpage() {
                         <button className='profile-button'>Create Profile</button>
                         <br />
                         <br />
-                        <p className='if-login'>Already have an account? <a href='/login' className='login-link'>Login</a></p>
+                        <p className='if-login'>Already have an account? <Link className='login-link' to='/login'>Login</Link></p>
                     </form>
                 </div>
             </div>
-            <div className="footer">
+            <div className="register-footer">
                 <p>©2025 AthletixHub. All rights reserved.</p>
             </div>
         </div>
