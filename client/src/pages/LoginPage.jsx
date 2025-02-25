@@ -35,10 +35,13 @@ export default function Loginpage() {
                         <input type="password" placeholder="Enter your password"/>
 
                         <br />
-                        
+
                         <button>Create Profile</button>
                     </form>
                 </div>
+            </div>
+            <div className="footer">
+                <p>©2025 AthletixHub. All rights reserved.</p>
             </div>
         </div>
     );

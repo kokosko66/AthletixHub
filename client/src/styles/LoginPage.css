@@ -14,16 +14,16 @@
     align-items: center;
     justify-content: center;
     border: 1px solid #ccc;
-    box-shadow: 5px 5px rgb(217, 205, 205);
-    width: 500px;
-    margin-left: 600px;
+    box-shadow: 8px 8px rgb(217, 205, 205);
+    width: 600px;
+    margin-left: 520px;
     margin-top: 100px;
-    padding: 10px;
+    padding: 20px;
     font-size: larger;
 }
 
 .register-form label {
-    font-size: larger;
+    font-size: large;
 }
 
 .register-form input {
@@ -48,7 +48,7 @@
     background: black;
     color: white;
     border: none;
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
     font-size: larger;
     position: relative;
@@ -56,10 +56,16 @@
 }
 
 .register-form button:hover {
-    /* background: white;
-    color: black;
-    border: 1px solid black;
-    */
     cursor: pointer; 
     transform: translateY(-5px);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    font-size: large;
+    background-color: rgb(193, 190, 190);
+    height: 12vh;
+    width: 100vw;
 }
