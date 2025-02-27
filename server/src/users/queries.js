@@ -1,4 +1,5 @@
 const getUsers = 'SELECT * FROM Users';
+const getUsersByRole = 'SELECT * FROM Users WHERE role = ?';
 const getUserById = 'SELECT * FROM Users WHERE id = ?';
 const getUserByName = 'SELECT * FROM Users WHERE name = ?';
 const getUserByEmail = 'SELECT * FROM Users WHERE email = ?';
@@ -12,6 +13,7 @@ export const queries = {
     getUserById,
     getUserByName,
     getUserByEmail,
+    getUsersByRole,
     addUser,
     updateUser,
     deleteUser,

@@ -21,7 +21,7 @@ export default function LoginPage() {
                         <br />
                         <input type="password" placeholder="Enter your password"/>
                         <br />
-                        <button className='profile-button'><Link className='login' to='/'>Login</Link></button>
+                        <button className='profile-button'><Link className='login' to='/trainers'>Login</Link></button>
                     </form>
                 </div>
             </div>

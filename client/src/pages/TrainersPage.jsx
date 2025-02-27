@@ -1,9 +1,9 @@
-import '../styles/HomePage.css';
+import '../styles/TrainersPage.css';
 import NavBar from './NavBar';
 
-export default function HomePage() {
+export default function TrainersPage() {
     return(
-        <div className='home-page'>
+        <div className='trainers-page'>
             <NavBar/>
             <section>
                 <h1>Test</h1>

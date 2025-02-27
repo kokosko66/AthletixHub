@@ -32,6 +32,16 @@ export const getUserById = async (req, res) => {
     }
 };
 
+export const getUsersByRole = async (req, res) => {
+    try {
+        const { role } = req.params;
+        const [rows] = await pool.query(queries.getUsersByRole, [role]);
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 export const getUserByName = async (req, res) => {
     try {
         const { name } = req.params;
