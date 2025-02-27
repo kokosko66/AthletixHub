@@ -1,8 +1,12 @@
+body {
+    font-family: sans-serif;
+}
+
 .container {
     background-color: rgb(245, 245, 230);
     width: 100vw;
     height: 100vh;
-  }
+}
   
 .top-container {
     display: flex;
@@ -40,8 +44,9 @@
     font-size: larger;
 }
 
-.login-form input:focus {
-    background-color: rgb(230, 218, 218);
+.login-form input:focus,
+.login-form input:not(:placeholder-shown) {
+  background-color: rgb(245,245,245);
 }
 
 .login-form .profile-button {
@@ -71,4 +76,17 @@
     background-color: rgb(193, 190, 190);
     margin-top: 250px;
     height: 10vh;
+}
+
+.login {
+    width: 50%;
+    margin-left: 5px;
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: larger;
+    position: relative;
+    text-decoration: none;
 }

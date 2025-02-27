@@ -1,5 +1,6 @@
 import '../styles/LoginPage.css';
 import dumbbell from '../assets/dumbbell.png';
+import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
     return(
@@ -20,7 +21,7 @@ export default function LoginPage() {
                         <br />
                         <input type="password" placeholder="Enter your password"/>
                         <br />
-                        <button className='profile-button'>Login</button>
+                        <button className='profile-button'><Link className='login' to='/'>Login</Link></button>
                     </form>
                 </div>
             </div>
