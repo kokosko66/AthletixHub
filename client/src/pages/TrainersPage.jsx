@@ -23,7 +23,7 @@ export default function TrainersPage() {
                 {
                     trainers.map((trainer) => (
                         <ul className='trainers-list' key={trainer.id}>
-                            <li>{trainer.name} <Link className='request-workout'>Request Workout</Link></li>
+                            <li>{trainer.name} <span>description</span> <Link className='request-workout'>Request Workout</Link></li>
                         </ul>
                     ))
                 }

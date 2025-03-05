@@ -1,22 +1,24 @@
 .trainers-list {
     display: flex;
+    flex-direction: row;
     list-style: none;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 100px;
+    justify-content: flex-start;
+    margin-top: 50px;
 }
 
 .trainers-list li {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 30px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     align-items: center;
+    justify-content: space-between;
     height: 100px;
-    width: 150px;
+    width: 500px;
 }
+
 
 .trainers-list li .request-workout {
     background-color: #4CAF50;
@@ -28,4 +30,5 @@
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    width: 100px;
 }
