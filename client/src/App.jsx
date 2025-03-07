@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import TrainersPage from './pages/TrainersPage';
 import WorkoutPage from './pages/WorkoutPage';
 
+
 function App() {
   return (
     <Router>
