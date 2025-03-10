@@ -56,6 +56,8 @@ export default function TrainersPage() {
                 setIsHighlighted(!isHighlighted);
             }}>Show Examples</button>
             
+            </div>
+
             <div className='workouts-container'>
                 {workouts.map((workout) => (
                     <div className='workout-item' key={workout.id}>
