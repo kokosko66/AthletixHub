@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import dumbbell from '../assets/dumbbell.png';
 import '../styles/RegisterPage.css';
 
 export default function Loginpage() {
-    const [role, setRole]  = useState('trainee');
+    const [role, setRole]  = useState('');
 
     return (
         <div className="container">
