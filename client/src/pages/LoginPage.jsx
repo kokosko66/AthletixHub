@@ -1,9 +1,44 @@
 import '../styles/LoginPage.css';
 import dumbbell from '../assets/dumbbell.png';
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 
 export default function LoginPage() {
-    return(
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate(); 
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/login', formData, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            setSuccess('Login successful!');
+            console.log('User logged in:', response.data);
+
+            navigate('/trainers');
+        } catch (err) {
+            setError(err.response?.data?.message || 'Invalid email or password!');
+            console.error('Login error:', err);
+        }
+    };
+
+    return (
         <div className="container">
             <div className="top-container">
                 <h1><img src={dumbbell} alt="icon" className='dumbbell-icon' />AthletixHub</h1>
@@ -12,17 +47,34 @@ export default function LoginPage() {
                 <div className="login-form">
                     <h2>Welcome Back To AthletixHub</h2>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <label>Email</label>
                         <br />
-                        <input type="email" placeholder="Enter your email"/>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Enter your email" 
+                            value={formData.email} 
+                            onChange={handleChange} 
+                            required 
+                        />
                         <br />
                         <label>Password</label>
                         <br />
-                        <input type="password" placeholder="Enter your password"/>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            placeholder="Enter your password" 
+                            value={formData.password} 
+                            onChange={handleChange} 
+                            required 
+                        />
                         <br />
-                        <button className='profile-button'><Link className='login' to='/trainers'>Login</Link></button>
 
+                        {error && <p className="error-message">{error}</p>}
+                        {success && <p className="success-message">{success}</p>}
+
+                        <button type="submit" className='profile-button'>Login</button>
                     </form>
                 </div>
             </div>

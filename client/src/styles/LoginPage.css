@@ -49,7 +49,6 @@ body {
 .login-form input:focus,
 .login-form input:not(:placeholder-shown) {
   background-color: rgb(245,245,245);
-    font-size: larger;
 }
 
 .login-form input:focus {
