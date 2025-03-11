@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 50px;
+    flex-direction: column;
 }
 
 .create-workout-button button {
@@ -21,18 +22,40 @@
     transform: translateY(-5px);
 }
 
-.workouts-list {
+.workouts-container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    margin-top: 30px;
-    list-style: none;
+    margin-top: 50px;
+    text-align: center;
 }
 
-.workouts-list li {
+.workout-item {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    border: 2px solid #ccc;
+}
+
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    list-style: none;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.select-workout-button {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: medium;
+    transition: transform 0.3s ease-in-out;
+}
+
+.select-workout-button:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
 }

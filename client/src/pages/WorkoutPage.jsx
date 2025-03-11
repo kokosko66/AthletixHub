@@ -7,6 +7,7 @@ export default function TrainersPage() {
 
     const [workouts, setWorkouts] = useState([]);
 
+
     useEffect(() => {
         axios.get('http://localhost:3000/api/workout_exercise_relation')
             .then((response) => {
@@ -45,7 +46,13 @@ export default function TrainersPage() {
             <NavBar />
             <div className='create-workout-button'>
                 <button>Create Workout</button>
+                <h3>These are example workouts, showing our variaty of exercises</h3>
             </div>
+
+            
+            
+            </div>
+
             <div className='workouts-container'>
                 {workouts.map((workout) => (
                     <div className='workout-item' key={workout.id}>
@@ -55,7 +62,9 @@ export default function TrainersPage() {
                                 <li key={exercise.id}>
                                     {exercise.name} - {exercise.repetitions} reps
                                 </li>
+                                
                             ))}
+                            <button className='select-workout-button'>Select Workout</button>
                         </ul>
                     </div>
                 ))}
