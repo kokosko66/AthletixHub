@@ -5,40 +5,40 @@ import '../styles/RegisterPage.css';
 import axios from 'axios';
 
 export default function RegisterPage() {
-    const [role, setRole]  = useState('');
-    const[formData, setFormdata] = useState({
-        role: "",
-        name: "",
-        email: "",
-        phone: "",
-        password: ""
+    const [role, setRole] = useState('trainee');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
     });
-    
     const [error, setError] = useState('');
-    const [success, setSuccsess] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        setFormdata({...formData, [e.target.name]: e.target.value});
-    }
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        setSuccsess('');
+        setSuccess('');
 
         try {
             const payload = {
                 ...formData,
                 role
-            };
-            const response = await axios.post('http://localhost:3000/api/users', payload,
-            {headers: { 'Content-Type': 'application/json' } });
+            }
+            const response = await axios.post('http://localhost:3000/api/users', payload, 
+                { headers: { 'Content-Type': 'application/json' } }
+            );
 
-            setSuccsess('Account created succsessfully!');
-            console.log('User registered: ', response.data)
-        } catch(err) {
-            setError(err.response?.data?.message || 'Something went wrong');
-            console.error('Registration error', err);
+            setSuccess('Account created successfully!');
+            console.log('User registered:', response.data);
+
+        } catch (err) {
+            setError(err.response?.data?.message || 'Something went wrong!');
+            console.error('Registration error:', err);
         }
     };
 
@@ -116,7 +116,6 @@ export default function RegisterPage() {
                         />
                         <br />
 
-                        {/* Error and Success Messages */}
                         {error && <p className="error-message">{error}</p>}
                         {success && <p className="success-message">{success}</p>}
 

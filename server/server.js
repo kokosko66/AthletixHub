@@ -38,7 +38,6 @@ app.use('/api', mealPlanFoods);
 app.use('/api', workoutExerciseRelationRoutes);
 
 app.post('/api/login', conroller.login);
-app.post('/api/register', conroller.register);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

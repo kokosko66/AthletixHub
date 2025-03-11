@@ -51,8 +51,6 @@ export default function TrainersPage() {
 
             
             
-            </div>
-
             <div className='workouts-container'>
                 {workouts.map((workout) => (
                     <div className='workout-item' key={workout.id}>

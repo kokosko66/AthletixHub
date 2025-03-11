@@ -1,5 +1,6 @@
 import { queries } from './queries.js';
 import mysql from 'mysql2/promise';
+import bcrypt from 'bcrypt';
 
 const pool = mysql.createPool({
     host: 'localhost',
@@ -64,8 +65,11 @@ export const getUserByEmail = async (req, res) => {
 
 export const addUser = async (req, res) => {
     try {
+        
         const { name, email, phone, password, role, created_at } = req.body;
-        await pool.query(queries.addUser, [name, email, phone, password, role, created_at]);
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        await pool.query(queries.addUser, [name, email, phone, hashedPassword, role, created_at]);
         res.status(201).json({ message: 'User added successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
