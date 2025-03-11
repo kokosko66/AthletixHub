@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function TrainersPage() {
 
     const [workouts, setWorkouts] = useState([]);
-    const[isHighlighted, setIsHighlighted] = useState(false);
+
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/workout_exercise_relation')
@@ -49,12 +49,7 @@ export default function TrainersPage() {
                 <h3>These are example workouts, showing our variaty of exercises</h3>
             </div>
 
-            <button className='show-more' onClick={() => {
-                if(isHighlighted === false) {
-                    setIsHighlighted(true);
-                }
-                setIsHighlighted(!isHighlighted);
-            }}>Show Examples</button>
+            
             
             </div>
 
@@ -62,12 +57,14 @@ export default function TrainersPage() {
                 {workouts.map((workout) => (
                     <div className='workout-item' key={workout.id}>
                         <h3>{workout.name}</h3>
-                        <ul className='exercise-list' style={{display: isHighlighted ? 'flex' : 'none'}}>
+                        <ul className='exercise-list'>
                             {workout.exercises.map((exercise) => (
                                 <li key={exercise.id}>
                                     {exercise.name} - {exercise.repetitions} reps
                                 </li>
+                                
                             ))}
+                            <button className='select-workout-button'>Select Workout</button>
                         </ul>
                     </div>
                 ))}

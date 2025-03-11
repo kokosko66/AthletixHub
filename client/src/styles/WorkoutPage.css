@@ -24,36 +24,38 @@
 
 .workouts-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     margin-top: 50px;
-    border: 2px solid #ccc; 
     text-align: center;
 }
 
-.workouts-container h3 {
-    margin-left: 40px;
-}
-.exercise-list {
-    display: none;
+.workout-item {
+    display: flex;
     flex-direction: column;
-    list-style: none;
-    gap: 10px;;
+    border: 2px solid #ccc;
 }
 
-.show-more {
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    list-style: none;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.select-workout-button {
     background-color: black;
-    border: none;
     color: white;
-    padding: 15px;
+    padding: 10px;
+    border: none;
     border-radius: 10px;
-    margin-left: 760px;
-    margin-top: 50px;
     font-size: medium;
     transition: transform 0.3s ease-in-out;
 }
 
-.show-more:hover {
+.select-workout-button:hover {
     cursor: pointer;
     transform: translateY(-5px);
 }
