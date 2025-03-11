@@ -39,6 +39,7 @@ export default function RegisterPage() {
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong!');
             console.error('Registration error:', err);
+
         }
     };
 

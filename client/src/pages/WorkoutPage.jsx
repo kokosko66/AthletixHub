@@ -49,8 +49,6 @@ export default function TrainersPage() {
                 <h3>These are example workouts, showing our variaty of exercises</h3>
             </div>
 
-            
-            
             <div className='workouts-container'>
                 {workouts.map((workout) => (
                     <div className='workout-item' key={workout.id}>
