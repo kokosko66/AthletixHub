@@ -27,7 +27,7 @@ export default function TrainersPage() {
                 {trainers.map((trainer) => (
                     <ul className="trainers-list" key={trainer.id}>
                         <li>
-                            {trainer.name} <span>{trainer.short_description}</span>{" "}
+                            {trainer.name + " " + trainer.family_name} <span>{trainer.short_description}</span>{" "}
                             <button 
                                 onClick={() => setSelectedTrainer(trainer)} 
                                 className="request-workout"
@@ -40,7 +40,8 @@ export default function TrainersPage() {
 
                 <Dialog isOpen={!!selectedTrainer} onClose={() => setSelectedTrainer(null)}>
                     <h2>Request Workout with {selectedTrainer?.name}</h2>
-                    <p>Here you can request a workout session.</p>
+                    <p>{selectedTrainer?.short_description}</p>
+                    <button className="requestworkout">Request Workout</button>
                 </Dialog>
             </section>
         </div>

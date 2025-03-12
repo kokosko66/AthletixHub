@@ -66,10 +66,10 @@ export const getUserByEmail = async (req, res) => {
 export const addUser = async (req, res) => {
     try {
         
-        const { name, email, phone, password, role, created_at, short_description } = req.body;
+        const { name, email, password, role, created_at, short_description, family_name } = req.body;
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        await pool.query(queries.addUser, [name, email, phone, hashedPassword, role, created_at, short_description]);
+        await pool.query(queries.addUser, [name, email, hashedPassword, role, created_at, short_description, family_name]);
         res.status(201).json({ message: 'User added successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -79,8 +79,8 @@ export const addUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, phone, password, role } = req.body;
-        const [result] = await pool.query(queries.updateUser, [name, email, phone, password, role, id]);
+        const { name, email, password, role, family_name } = req.body;
+        const [result] = await pool.query(queries.updateUser, [name, email, password, role, family_name, id]);
         if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
         res.json({ message: 'User updated successfully' });
     } catch (error) {

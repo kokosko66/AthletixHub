@@ -38,3 +38,15 @@
 .trainers-list span {
     text-align: center;
 }
+
+.requestworkout {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.requestworkout:hover {
+    cursor: pointer;
+}

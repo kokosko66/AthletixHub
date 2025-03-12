@@ -1,8 +1,6 @@
-
 body {
   font-family: sans-serif;
 }
-
 
 .container {
   background-color: rgb(245, 245, 230);
@@ -78,7 +76,7 @@ body {
     box-shadow: 8px 8px rgb(65, 65, 65);
     width: 600px;
     margin-left: 520px;
-    margin-top: 100px;
+    margin-top: 20px;
     padding: 20px;
     font-size: larger;
 }

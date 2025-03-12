@@ -9,9 +9,9 @@ export default function RegisterPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
         password: '',
         short_description: '',
+        family_name: '',
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -82,6 +82,18 @@ export default function RegisterPage() {
                         />
                         <br/>
 
+                        <label>Family Name</label>
+                        <br />
+                        <input 
+                            type="text" 
+                            name="family_name"
+                            placeholder="Enter your family name"
+                            value={formData.family_name}
+                            onChange={handleChange}
+                            required
+                        />
+                        <br />
+
                         <label>Email</label>
                         <br />
                         <input 
@@ -89,18 +101,6 @@ export default function RegisterPage() {
                             name="email"
                             placeholder="Enter your email"
                             value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                        <br />
-
-                        <label>Phone</label>
-                        <br />
-                        <input 
-                            type="tel" 
-                            name="phone"
-                            placeholder="Enter your phone number"
-                            value={formData.phone}
                             onChange={handleChange}
                             required
                         />
