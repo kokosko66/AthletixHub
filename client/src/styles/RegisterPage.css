@@ -98,6 +98,21 @@ body {
     font-size: 20px;
 }
 
+.register-form textarea {
+  width: 100%;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgb(220,220,220);
+  font: bold;
+  font-size: 20px;
+}
+
+.register-form textarea:focus,
+.register-form textarea:not(:placeholder-shown) {
+  background-color: rgb(245,245,245);
+}
+
 .register-form input:focus,
 .register-form input:not(:placeholder-shown) {
   background-color: rgb(245,245,245);
@@ -147,4 +162,11 @@ body {
   font-size: larger;
   position: relative;
   text-decoration: none;
+}
+
+form .description-field {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+
 }

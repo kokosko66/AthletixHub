@@ -34,3 +34,7 @@
     cursor: pointer;
     width: 100px;
 }
+
+.trainers-list span {
+    text-align: center;
+}

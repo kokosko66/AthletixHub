@@ -11,6 +11,7 @@ export default function RegisterPage() {
         email: '',
         phone: '',
         password: '',
+        short_description: '',
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -115,6 +116,19 @@ export default function RegisterPage() {
                             onChange={handleChange}
                             required
                         />
+                        <br />
+                        <label>Description</label>
+                        <textarea
+                        rows="4" 
+                        cols="50" 
+                        type="text" 
+                        name='short_description'
+                        placeholder='Enter a short description'
+                        value={formData.short_description}
+                        onChange={handleChange}
+                        className='description-field'
+                        />
+
                         <br />
 
                         {error && <p className="error-message">{error}</p>}

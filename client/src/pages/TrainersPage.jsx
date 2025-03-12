@@ -27,7 +27,7 @@ export default function TrainersPage() {
                 {trainers.map((trainer) => (
                     <ul className="trainers-list" key={trainer.id}>
                         <li>
-                            {trainer.name} <span>description</span>{" "}
+                            {trainer.name} <span>{trainer.short_description}</span>{" "}
                             <button 
                                 onClick={() => setSelectedTrainer(trainer)} 
                                 className="request-workout"
