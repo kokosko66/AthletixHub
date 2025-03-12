@@ -28,10 +28,15 @@ export default function LoginPage() {
                 headers: { 'Content-Type': 'application/json' }
             });
 
+            const { token, user } = response.data;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
             setSuccess('Login successful!');
             console.log('User logged in:', response.data);
 
-            navigate('/trainers');
+            navigate('/profile');
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password!');
             console.error('Login error:', err);

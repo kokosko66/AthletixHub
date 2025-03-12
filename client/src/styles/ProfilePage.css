@@ -1,0 +1,11 @@
+.user-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    box-shadow: 8px 8px rgb(65, 65, 65);
+    background-color: white;
+    width: 600px;
+    margin-top: 50px;
+}
