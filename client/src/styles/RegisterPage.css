@@ -95,6 +95,7 @@ body {
     border-radius: 10px;
     background-color: rgb(220,220,220);
     font: bold;
+    font-size: 20px;
 }
 
 .register-form input:focus,

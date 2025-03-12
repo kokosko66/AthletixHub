@@ -17,6 +17,8 @@
     justify-content: space-between;
     height: 100px;
     width: 500px;
+    box-shadow: 8px 8px rgb(65, 65, 65);
+    background-color: white;
 }
 
 
@@ -28,7 +30,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     width: 100px;
 }
