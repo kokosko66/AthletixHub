@@ -3,12 +3,25 @@ import '../styles/WorkoutPage.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Dialog from '../components/Dialog';
+import { useNavigate } from 'react-router-dom';
 
 export default function WorkoutsPage() {
     const [workouts, setWorkouts] = useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [newWorkoutName, setNewWorkoutName] = useState('');
     const [exercises, setExercises] = useState([{ name: '', repetitions: '' }]);
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        } else {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/workout_exercise_relation')
@@ -68,6 +81,28 @@ export default function WorkoutsPage() {
             .catch((error) => console.log(error));
     };
 
+    const selectWorkout = (workoutId) => {
+        if (!user) {
+            console.log("No user found.");
+            return;
+        }
+    
+        const userWorkoutData = {
+            userId: user.id,
+            workoutId: workoutId
+        };
+
+    
+        axios.post('http://localhost:3000/api/user_workouts', userWorkoutData)
+            .then(() => {
+                alert("Workout added successfully!");
+            })
+            .catch((error) => {
+                console.error("Error adding workout:", error);
+            });
+    };
+    
+
     return (
         <div className="page-container">
             <NavBar />
@@ -91,7 +126,13 @@ export default function WorkoutsPage() {
                                 </li>
                             ))}
                         </ul>
-                        <button className="select-workout-button">Select Workout</button>
+                        <button 
+                        onClick={() => {
+                            selectWorkout(workout.id);
+                        }}
+                        className="select-workout-button"
+                        >
+                            Select Workout</button>
                     </div>
                 ))}
             </div>

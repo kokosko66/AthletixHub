@@ -43,13 +43,21 @@ export const getUserWorkoutByName = async (req, res) => {
 
 export const addUserWorkout = async (req, res) => {
     try {
-        const { name, created_at } = req.body;
-        await pool.query(queries.addUserWorkout, [name, created_at]);
+        const { userId, workoutId } = req.body;
+
+        if (!userId || !workoutId) {
+            return res.status(400).json({ error: "Missing userId or workoutId" });
+        }
+
+        await pool.query(queries.addUserWorkout, [userId, workoutId]);
+
         res.status(201).json({ message: 'User Workout added successfully' });
     } catch (error) {
+        console.error("Error adding workout:", error);
         res.status(500).json({ error: error.message });
     }
 };
+
 
 export const updateUserWorkout = async (req, res) => {
     try {
