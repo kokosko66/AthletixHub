@@ -9,7 +9,7 @@ export default function NavBar() {
                 <ul>
                     <li><Link className='link-design' to='/trainers'>Trainers</Link></li>
                     <li><Link className='link-design' to='/workouts'>Workouts</Link></li>
-                    <li><Link className='link-design'>Meals</Link></li>
+                    <li><Link className='link-design' to='/meals'>Meals</Link></li>
                     <li><Link className='link-design' to='/profile'>Profile</Link></li>
                 </ul>
             </nav>

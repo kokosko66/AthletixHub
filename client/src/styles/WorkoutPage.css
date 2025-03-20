@@ -324,7 +324,6 @@
     cursor: not-allowed;
 }
 
-/* Responsive styles */
 @media (max-width: 992px) {
     .workouts-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
