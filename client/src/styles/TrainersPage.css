@@ -1,34 +1,182 @@
-.trainers-list {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    justify-content: flex-start;
-    margin-top: 50px;
-}
-
-.trainers-list li {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: space-between;
-    height: 100px;
-    width: 500px;
-}
-
-
-.trainers-list li .request-workout {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
+.trainers-page {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .trainers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .trainers-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
+  }
+  
+  .trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .trainer-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    height: 100%;
+  }
+  
+  .trainer-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #69b26b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .trainer-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .trainer-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+  
+  .request-workout-btn {
+    background-color: #69b26b;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    width: 100px;
-}
+    transition: background-color 0.2s ease;
+    align-self: flex-start;
+    margin-top: auto;
+  }
+  
+  .request-workout-btn:hover {
+    background-color: #5a9b5c;
+  }
+  
+  /* Loading state */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #69b26b;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Dialog styling */
+  .dialog-content {
+    padding: 1.5rem;
+  }
+  
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dialog-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #69b26b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+  
+  .dialog-description {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .dialog-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dialog-cancel:hover {
+    background-color: #e1e1e1;
+  }
+  
+  .dialog-request {
+    background-color: #69b26b;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dialog-request:hover {
+    background-color: #5a9b5c;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .trainers-grid {
+      grid-template-columns: 1fr;
+    }
+  }

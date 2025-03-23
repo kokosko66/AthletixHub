@@ -1,9 +1,3 @@
-// meal_plan_id INT,
-// food_id INT,
-// PRIMARY KEY (meal_plan_id, food_id),
-// FOREIGN KEY (meal_plan_id) REFERENCES MealPlans(id) ON DELETE CASCADE,
-// FOREIGN KEY (food_id) REFERENCES Foods(id) ON DELETE CASCADE
-
 const getMealPlanFoods = 'SELECT * FROM MealPlanFoods';
 const getMealPlanFoodById = 'SELECT * FROM MealPlanFoods WHERE meal_plan_id = ? AND food_id = ?';
 

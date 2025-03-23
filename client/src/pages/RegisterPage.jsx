@@ -9,8 +9,9 @@ export default function RegisterPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
         password: '',
+        short_description: '',
+        family_name: '',
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -39,95 +40,131 @@ export default function RegisterPage() {
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong!');
             console.error('Registration error:', err);
-
         }
     };
 
     return (
         <div className="container">
-            <div className="top-container">
-                <h1><img src={dumbbell} alt="icon" className='dumbbell-icon' />AthletixHub</h1>
+            <div className="header">
+                <div className="logo">
+                    <img src={dumbbell} alt="AthletixHub logo" className="dumbbell-icon" />
+                    <h1>AthletixHub</h1>
+                </div>
             </div>
-            <div className='main-container'>
-                <div className="register-form">
-                    <h2>Join AthletixHub</h2>
-
-                    <div className={`role-switch ${role === 'trainer' ? 'trainer-active' : ''}`}>
-                        <button 
-                            onClick={() => setRole('trainee')} 
-                            className={`role-button ${role === 'trainee' ? 'active' : ''}`}
-                        >
-                            Trainee
-                        </button>
-                        <button 
-                            onClick={() => setRole('trainer')} 
-                            className={`role-button ${role === 'trainer' ? 'active' : ''}`}
-                        >
-                            Trainer
-                        </button>
-                        <div className="switch-indicator"></div>
+            
+            <div className="main-content">
+                <div className="page-title">
+                    <h1>Create Your Account</h1>
+                    <p>Explore our collection of workouts or create your own</p>
+                </div>
+                
+                <div className="register-card">
+                    <div className="role-switch-container">
+                        <div className={`role-switch ${role === 'trainer' ? 'trainer-active' : ''}`}>
+                            <button 
+                                onClick={() => setRole('trainee')} 
+                                className={`role-button ${role === 'trainee' ? 'active' : ''}`}
+                            >
+                                Trainee
+                            </button>
+                            <button 
+                                onClick={() => setRole('trainer')} 
+                                className={`role-button ${role === 'trainer' ? 'active' : ''}`}
+                            >
+                                Trainer
+                            </button>
+                            <div className="switch-indicator"></div>
+                        </div>
                     </div>
 
                     <form onSubmit={handleSubmit}>
-                        <label>Name</label>
-                        <br/>
-                        <input 
-                            type="text" 
-                            name="name" 
-                            placeholder="Enter your name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                        <br/>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>First Name</label>
+                                <input 
+                                    type="text" 
+                                    name="name" 
+                                    placeholder="Enter your first name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label>Last Name</label>
+                                <input 
+                                    type="text" 
+                                    name="family_name"
+                                    placeholder="Enter your last name"
+                                    value={formData.family_name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
 
-                        <label>Email</label>
-                        <br />
-                        <input 
-                            type="email" 
-                            name="email"
-                            placeholder="Enter your email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                        <br />
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input 
+                                type="email" 
+                                name="email"
+                                placeholder="Enter your email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                        <label>Phone</label>
-                        <br />
-                        <input 
-                            type="tel" 
-                            name="phone"
-                            placeholder="Enter your phone number"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            required
-                        />
-                        <br />
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input 
+                                type="password" 
+                                name="password"
+                                placeholder="Enter your password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                        <label>Password</label>
-                        <br />
-                        <input 
-                            type="password" 
-                            name="password"
-                            placeholder="Enter your password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                        <br />
+                        <div className="form-group">
+                            <label>Level</label>
+                            Beginner
+                            <input type='checkbox' name="level"
+
+                            />
+                            Advanced
+                            <input type='checkbox' name="level"
+
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>About You</label>
+                            <textarea
+                                rows="3" 
+                                name="short_description"
+                                placeholder="Tell us about your fitness goals or expertise"
+                                value={formData.short_description}
+                                onChange={handleChange}
+                                className="description-field"
+                            />
+                        </div>
 
                         {error && <p className="error-message">{error}</p>}
                         {success && <p className="success-message">{success}</p>}
 
-                        <button type="submit" className='profile-button'>Create Profile</button>
-                        <br />
-                        <br />
-                        <p className='if-login'>Already have an account? <Link className='login-link' to='/login'>Login</Link></p>
+                        <button type="submit" className="primary-button">Create Profile</button>
+                        
+                        <div className="login-prompt">
+                            <p>Already have an account? <Link to="/login" className="login-link">Login</Link></p>
+                        </div>
                     </form>
                 </div>
             </div>
-            <div className="register-footer">
+            
+            <div className="footer">
                 <p>©2025 AthletixHub. All rights reserved.</p>
             </div>
         </div>

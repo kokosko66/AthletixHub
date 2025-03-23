@@ -13,9 +13,20 @@ const pool = mysql.createPool({
 
 export const getUserWorkouts = async (req, res) => {
     try {
-        const [rows] = await pool.query(queries.getUserWorkouts);
-        res.json(rows);
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ error: "Missing userId" });
+        }
+
+        const result = await pool.query(
+            'SELECT workout_id FROM UserWorkouts WHERE user_id = ?',
+            [userId]
+        );
+
+        res.json(result);
     } catch (error) {
+        console.error("Error fetching user workouts:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -43,13 +54,31 @@ export const getUserWorkoutByName = async (req, res) => {
 
 export const addUserWorkout = async (req, res) => {
     try {
-        const { name, created_at } = req.body;
-        await pool.query(queries.addUserWorkout, [name, created_at]);
-        res.status(201).json({ message: 'User Workout added successfully' });
+        const { userId, workoutId } = req.body;
+
+        const existingWorkout = await pool.query(
+            'SELECT * FROM UserWorkouts WHERE user_id = ? AND workout_id = ?',
+            [userId, workoutId]
+        );
+
+        if (existingWorkout.length > 0) {
+            return res.status(200).json({ message: "Workout already selected" }); // ✅ Return 200 instead of 409
+        }
+
+        await pool.query(
+            'INSERT INTO UserWorkouts (user_id, workout_id) VALUES (?, ?)',
+            [userId, workoutId]
+        );
+
+        res.status(201).json({ message: "Workout added successfully" });
     } catch (error) {
+        console.error("Error adding workout:", error);
         res.status(500).json({ error: error.message });
     }
 };
+
+
+
 
 export const updateUserWorkout = async (req, res) => {
     try {

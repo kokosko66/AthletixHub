@@ -1,6 +1,6 @@
 import '../styles/LoginPage.css';
 import dumbbell from '../assets/dumbbell.png';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -28,10 +28,15 @@ export default function LoginPage() {
                 headers: { 'Content-Type': 'application/json' }
             });
 
+            const { token, user } = response.data;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
             setSuccess('Login successful!');
             console.log('User logged in:', response.data);
 
-            navigate('/trainers');
+            navigate('/profile');
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password!');
             console.error('Login error:', err);
@@ -45,11 +50,11 @@ export default function LoginPage() {
             </div>
             <div className="main-container">
                 <div className="login-form">
-                    <h2>Welcome Back To AthletixHub</h2>
+                    <h2>Sign In</h2>
+                    <p className="subtitle">Access your personal workout plans and progress</p>
 
                     <form onSubmit={handleSubmit}>
                         <label>Email</label>
-                        <br />
                         <input 
                             type="email" 
                             name="email" 
@@ -58,9 +63,7 @@ export default function LoginPage() {
                             onChange={handleChange} 
                             required 
                         />
-                        <br />
                         <label>Password</label>
-                        <br />
                         <input 
                             type="password" 
                             name="password" 
@@ -69,12 +72,15 @@ export default function LoginPage() {
                             onChange={handleChange} 
                             required 
                         />
-                        <br />
 
                         {error && <p className="error-message">{error}</p>}
                         {success && <p className="success-message">{success}</p>}
 
-                        <button type="submit" className='profile-button'>Login</button>
+                        <button type="submit" className="profile-button">Login</button>
+                        
+                        <div className="alternative-action">
+                            <p>Don't have an account? <Link to="/" className="register-link">Create Account</Link></p>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -7,6 +7,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 5px rgb(211,211,211);
+    width: 100vw;
 }
 
 .top-bar h1 {
@@ -26,5 +27,5 @@ body {
 }
 
 .link-design:hover {
-    color: #4CAF50;
+    color: #3c399b;
 }

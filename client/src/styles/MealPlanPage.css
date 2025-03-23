@@ -1,0 +1,252 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .page-title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .page-description {
+    font-size: 20px;
+    text-align: center;
+    color: #666;
+    margin-bottom: 24px;
+  }
+  
+  .create-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  
+  .create-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #5850ec;
+    color: white;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .create-button:hover {
+    background-color: #4338ca;
+  }
+  
+  .plus-icon {
+    font-size: 20px;
+  }
+  
+  .form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .form-subtitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-label {
+    display: block;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .food-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .food-input-group {
+    width: 100%;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .add-food-button {
+    background-color: #e0e7ff;
+    color: #5850ec;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-food-button:hover {
+    background-color: #c7d2fe;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  
+  .cancel-button {
+    background-color: #e5e7eb;
+    color: #4b5563;
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cancel-button:hover {
+    background-color: #d1d5db;
+  }
+  
+  .save-button {
+    background-color: #5850ec;
+    color: white;
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button:hover {
+    background-color: #4338ca;
+  }
+  
+  .meal-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  @media (min-width: 768px) {
+    .meal-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .meal-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  
+  .meal-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .meal-header {
+    background-color: #5850ec;
+    padding: 24px;
+  }
+  
+  .meal-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+  }
+  
+  .meal-count {
+    color: #c7d2fe;
+    margin: 0;
+  }
+  
+  .meal-content {
+    background-color: white;
+    padding: 24px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .food-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .food-name {
+    font-weight: 500;
+    margin: 0 0 4px 0;
+  }
+  
+  .food-quantity {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  .food-calories {
+    text-align: right;
+  }
+  
+  .food-calories p {
+    margin: 0;
+  }
+  
+  .total-calories {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+  
+  .add-to-plan-button {
+    width: 100%;
+    background-color: #5850ec;
+    color: white;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    margin-top: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-to-plan-button:hover {
+    background-color: #4338ca;
+  }

@@ -1,0 +1,1 @@
+wc -l client/src/components/* client/src/pages/* client/src/styles/* client/src/* server/src/exercises/* server/src/foods/* server/src/meal_plan_foods/* server/src/meal_plans/* server/src/user_meal_plans/* server/src/user_workouts/* server/src/users/* server/src/workout_exercise_relation/* server/src/workout_exercises/* server/src/workouts/* server/src/* server/*.js
