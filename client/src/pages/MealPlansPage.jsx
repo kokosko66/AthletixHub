@@ -193,7 +193,7 @@ const MealPlanPage = () => {
               </div>
               
               <button className="add-to-plan-button">
-                Add to My Meal Plan
+                Add To Meals Eaten Today
               </button>
             </div>
           </div>

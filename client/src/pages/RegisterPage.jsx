@@ -129,6 +129,18 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="form-group">
+                            <label>Level</label>
+                            Beginner
+                            <input type='checkbox' name="level"
+
+                            />
+                            Advanced
+                            <input type='checkbox' name="level"
+
+                            />
+                        </div>
+
+                        <div className="form-group">
                             <label>About You</label>
                             <textarea
                                 rows="3" 

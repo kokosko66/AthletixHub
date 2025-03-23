@@ -172,6 +172,7 @@ export default function WorkoutsPage() {
                                 <div className="workout-card-header">
                                     <h3>{workout.name}</h3>
                                     <span className="exercise-count">{workout.exercises.length} exercises</span>
+                                    {/* <p>Repetitions for a week <textarea className='reps' placeholder='e.g 2'></textarea></p> */}
                                 </div>
                                 
                                 <div className="workout-card-content">
