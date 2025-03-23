@@ -63,7 +63,6 @@ export default function LoginPage() {
                             onChange={handleChange} 
                             required 
                         />
-                        
                         <label>Password</label>
                         <input 
                             type="password" 

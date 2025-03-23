@@ -65,7 +65,6 @@ export const getUserByEmail = async (req, res) => {
 
 export const addUser = async (req, res) => {
     try {
-        
         const { name, email, password, role, created_at, short_description, family_name } = req.body;
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);

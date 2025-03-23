@@ -137,7 +137,6 @@ export default function WorkoutsPage() {
             console.error("Error fetching user workouts:", error);
         }
     };
-
     const removeExerciseField = (index) => {
         if (exercises.length > 1) {
             const updatedExercises = exercises.filter((_, i) => i !== index);
@@ -184,9 +183,8 @@ export default function WorkoutsPage() {
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
-                                
-                                <div className="workout-card-footer">
+                                </div>                           
+                               <div className="workout-card-footer">
                                     <button 
                                         onClick={() => selectWorkout(workout.id)}
                                         className={`select-workout-button ${userWorkouts.some((uw) => uw.workout_id === workout.id) ? 'selected' : ''}`}
