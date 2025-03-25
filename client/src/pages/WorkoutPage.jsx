@@ -40,18 +40,22 @@ export default function WorkoutsPage() {
     }, [user]);
 
     useEffect(() => {
-        setLoading(true);
-        axios.get('http://localhost:3000/api/workout_exercise_relation')
-            .then((response) => {
-                const groupedWorkouts = groupExercisesByWorkout(response.data);
-                setWorkouts(groupedWorkouts);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-            });
-    }, []);
+        if (user) {
+            setLoading(true);
+            axios.get(`http://localhost:3000/api/workout_exercise_relation?userId=${user.id}`)
+                .then((response) => {
+                    const groupedWorkouts = groupExercisesByWorkout(response.data);
+                    setWorkouts(groupedWorkouts);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setLoading(false);
+                });
+        } else {
+            setWorkouts([]);
+        }
+    }, [user]);
 
     const groupExercisesByWorkout = (data) => {
         const workoutMap = new Map();
@@ -86,25 +90,27 @@ export default function WorkoutsPage() {
     };
 
     const createWorkout = () => {
-        const newWorkout = {
-            name: newWorkoutName,
-            exercises
-        };
+    if (!user) {
+        console.error("User not logged in");
+        return;
+    }
     
-        axios.post('http://localhost:3000/api/workouts', newWorkout)
-            .then(() => {
-                setIsDialogOpen(false);
-                setNewWorkoutName('');
-                setExercises([{ name: '', repetitions: '' }]);
-                
-                axios.get('http://localhost:3000/api/workout_exercise_relation')
-                    .then((response) => {
-                        setWorkouts(groupExercisesByWorkout(response.data));
-                    })
-                    .catch((error) => console.log(error));
-            })
-            .catch((error) => console.log(error));
+    const newWorkout = {
+        name: newWorkoutName,
+        exercises,
+        userId: user.id
     };
+
+    axios.post('http://localhost:3000/api/workouts', newWorkout)
+        .then(() => {
+            setIsDialogOpen(false);
+            setNewWorkoutName('');
+            setExercises([{ name: '', repetitions: '' }]);
+            
+            fetchUserWorkouts();
+        })
+        .catch((error) => console.log(error));
+};
     
     const selectWorkout = async (workoutId) => {
         if (!user) return;
@@ -133,6 +139,16 @@ export default function WorkoutsPage() {
         try {
             const response = await axios.get(`http://localhost:3000/api/user_workouts?userId=${user.id}`);
             setUserWorkouts(response.data);
+            
+            if (response.data.length > 0) {
+                const workoutIds = response.data.map(uw => uw.workout_id);
+                const workoutsResponse = await axios.get(
+                    `http://localhost:3000/api/workout_exercise_relation?userOnly=true&userId=${user.id}`
+                );
+                setWorkouts(groupExercisesByWorkout(workoutsResponse.data));
+            } else {
+                setWorkouts([]);
+            }
         } catch (error) {
             console.error("Error fetching user workouts:", error);
         }
@@ -171,7 +187,6 @@ export default function WorkoutsPage() {
                                 <div className="workout-card-header">
                                     <h3>{workout.name}</h3>
                                     <span className="exercise-count">{workout.exercises.length} exercises</span>
-                                    {/* <p>Repetitions for a week <textarea className='reps' placeholder='e.g 2'></textarea></p> */}
                                 </div>
                                 
                                 <div className="workout-card-content">
