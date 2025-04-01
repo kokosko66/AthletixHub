@@ -1,7 +1,7 @@
 .profile-page {
     min-height: 100vh;
     background-color: #f7f7ff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Loading animation */
@@ -24,8 +24,12 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Dashboard container */
@@ -95,7 +99,9 @@
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     padding: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .dashboard-card:hover {
@@ -246,14 +252,119 @@
         flex-direction: column;
         text-align: center;
     }
-    
+
     .profile-avatar {
         margin-right: 0;
         margin-bottom: 20px;
     }
-    
+
     .stats-container {
         flex-direction: column;
         gap: 30px;
+    }
+}
+
+.workout-requests-card {
+    grid-column: span 2;
+}
+
+.workout-requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.workout-request-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.request-user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.request-user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4a47a3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.request-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.request-user-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.request-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.request-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.request-accept-btn,
+.request-reject-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.request-accept-btn {
+    background-color: #4a47a3;
+    color: white;
+}
+
+.request-accept-btn:hover {
+    background-color: #3d3a86;
+}
+
+.request-reject-btn {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.request-reject-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workout-requests-card {
+        grid-column: span 1;
     }
 }
