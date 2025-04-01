@@ -13,6 +13,7 @@ import mealPlanFoods from "./src/meal_plan_foods/routes.js";
 import workoutExerciseRelationRoutes from "./src/workout_exercise_relation/routes.js";
 import workoutRequestsRoutes from "./src/workout_requests/routes.js";
 import chatMessagesRoutes from "./src/chat_messages/routes.js";
+import completedWorkoutsRoutes from "./src/completed_workouts/routes.js";
 import { conroller } from "./src/controller.js";
 
 const app = express();
@@ -37,6 +38,7 @@ app.use("/api", mealPlanFoods);
 app.use("/api", workoutExerciseRelationRoutes);
 app.use("/api", workoutRequestsRoutes);
 app.use("/api", chatMessagesRoutes);
+app.use("/api", completedWorkoutsRoutes);
 
 app.post("/api/login", conroller.login);
 
