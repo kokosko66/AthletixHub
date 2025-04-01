@@ -368,3 +368,246 @@
         grid-column: span 1;
     }
 }
+
+/* Additional CSS to be added to your existing ProfilePage.css */
+
+/* Profile container */
+.profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Profile tabs */
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+}
+
+.profile-tab {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.profile-tab:hover {
+    color: #4a47a3;
+}
+
+.profile-tab.active {
+    color: #4a47a3;
+}
+
+.profile-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4a47a3;
+}
+
+/* Chat container */
+.chat-container-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 600px;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+    }
+
+    .profile-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .chat-container-wrapper {
+        height: 80vh;
+    }
+}
+
+/* Additional CSS to be added to your existing ProfilePage.css */
+
+/* Profile actions (logout and delete buttons) */
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.logout-btn,
+.delete-account-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.logout-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.delete-account-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.delete-account-btn:hover {
+    background-color: #ff3333;
+}
+
+/* Delete account confirmation dialog */
+.delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirmation-dialog {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirmation-dialog h3 {
+    margin-top: 0;
+    color: #ff4d4d;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff3333;
+}
+
+/* Profile container */
+.profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Profile tabs */
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+}
+
+.profile-tab {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.profile-tab:hover {
+    color: #4a47a3;
+}
+
+.profile-tab.active {
+    color: #4a47a3;
+}
+
+.profile-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4a47a3;
+}
+
+/* Chat container */
+.chat-container-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 600px;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+    }
+
+    .profile-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .chat-container-wrapper {
+        height: 80vh;
+    }
+}
