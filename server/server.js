@@ -14,6 +14,7 @@ import workoutExerciseRelationRoutes from "./src/workout_exercise_relation/route
 import workoutRequestsRoutes from "./src/workout_requests/routes.js";
 import chatMessagesRoutes from "./src/chat_messages/routes.js";
 import completedWorkoutsRoutes from "./src/completed_workouts/routes.js";
+import completedMealsRoutes from "./src/completed_meals/routes.js";
 import { conroller } from "./src/controller.js";
 
 const app = express();
@@ -39,6 +40,7 @@ app.use("/api", workoutExerciseRelationRoutes);
 app.use("/api", workoutRequestsRoutes);
 app.use("/api", chatMessagesRoutes);
 app.use("/api", completedWorkoutsRoutes);
+app.use("/api", completedMealsRoutes);
 
 app.post("/api/login", conroller.login);
 

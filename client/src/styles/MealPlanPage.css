@@ -250,3 +250,581 @@
 .add-to-plan-button:hover {
     background-color: #4338ca;
 }
+
+/* Add these styles to your MealPlanPage.css file */
+
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.date-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.date-picker-container label {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+.date-picker-container input {
+    padding: 0.6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.meal-card.completed {
+    border-left: 4px solid #4caf50;
+}
+
+.meal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.completion-toggle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.75rem;
+}
+
+.completion-toggle:hover {
+    border-color: #4a47a3;
+}
+
+.completion-toggle.completed {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.add-to-plan-button {
+    flex: 1;
+}
+
+.add-to-plan-button.completed {
+    background-color: #e0e0e0;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.food-list-placeholder {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-style: italic;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e0e0e0;
+    border-radius: 50%;
+    border-top: 3px solid #4a47a3;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.no-meals-message {
+    text-align: center;
+    padding: 2rem;
+    grid-column: 1 / -1;
+    color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .top-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-picker-container {
+        width: 100%;
+    }
+
+    .date-picker-container input {
+        flex-grow: 1;
+    }
+
+    .create-button-container {
+        width: 100%;
+    }
+
+    .create-button {
+        width: 100%;
+    }
+}
+
+/* MealPlanPage.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.page-description {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Top Controls */
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.date-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.date-picker-container label {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+.date-picker-container input {
+    padding: 0.6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.create-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-button {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background-color: #4a47a3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.create-button:hover {
+    background-color: #3d3a86;
+}
+
+.plus-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Form */
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.form-subtitle {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.food-inputs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.food-input-group {
+    flex: 1;
+}
+
+.remove-food-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 1.9rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-food-button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    margin-bottom: 1.5rem;
+}
+
+.add-food-button {
+    background: none;
+    border: 1px dashed #4a47a3;
+    color: #4a47a3;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.save-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #4a47a3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.save-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Meal Cards */
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.meal-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid transparent;
+    transition: transform 0.2s;
+}
+
+.meal-card:hover {
+    transform: translateY(-5px);
+}
+
+.meal-card.completed {
+    border-left: 4px solid #4caf50;
+}
+
+.meal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.meal-count {
+    background-color: #f0f0f0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.meal-content {
+    padding: 1.5rem;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.food-info {
+    flex: 1;
+}
+
+.food-name {
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+}
+
+.food-quantity {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.food-calories {
+    padding-left: 1rem;
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+.total-calories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+    font-weight: 500;
+}
+
+.meal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.add-to-plan-button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background-color: #4a47a3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.add-to-plan-button:hover {
+    background-color: #3d3a86;
+}
+
+.add-to-plan-button.completed {
+    background-color: #e0e0e0;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.completion-toggle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.75rem;
+}
+
+.completion-toggle:hover {
+    border-color: #4a47a3;
+}
+
+.completion-toggle.completed {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.food-list-placeholder {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-style: italic;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e0e0e0;
+    border-radius: 50%;
+    border-top: 3px solid #4a47a3;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.no-meals-message {
+    text-align: center;
+    padding: 2rem;
+    grid-column: 1 / -1;
+    color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .top-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-picker-container {
+        width: 100%;
+    }
+
+    .date-picker-container input {
+        flex-grow: 1;
+    }
+
+    .create-button-container {
+        width: 100%;
+    }
+
+    .create-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .meal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .food-inputs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .remove-food-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: 0;
+    }
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #d32f2f;
+}
