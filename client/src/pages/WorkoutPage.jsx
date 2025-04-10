@@ -475,27 +475,19 @@ export default function WorkoutsPage() {
                   </ul>
                 </div>
                 <div className="workout-card-footer">
-                  <div className="workout-buttons">
+                  <div className="workout-actions">
                     <button
-                      onClick={() => selectWorkout(workout.id)}
-                      className={`select-workout-button ${userWorkouts.some((uw) => uw.workout_id === workout.id) ? "selected" : ""}`}
-                      disabled={userWorkouts.some(
-                        (uw) => uw.workout_id === workout.id,
-                      )}
+                      className={`add-to-plan-button ${isWorkoutCompleted(workout.id) ? "completed" : ""}`}
+                      onClick={() => toggleWorkoutCompletion(workout.id)}
                     >
-                      {userWorkouts.some((uw) => uw.workout_id === workout.id)
-                        ? "Added to My Workouts"
-                        : "Add to My Workouts"}
+                      {isWorkoutCompleted(workout.id)
+                        ? "Marked as Completed"
+                        : "Add To Workouts Completed Today"}
                     </button>
 
                     <button
                       className={`completion-toggle ${isWorkoutCompleted(workout.id) ? "completed" : ""}`}
                       onClick={() => toggleWorkoutCompletion(workout.id)}
-                      title={
-                        isWorkoutCompleted(workout.id)
-                          ? "Mark as incomplete"
-                          : "Mark as completed"
-                      }
                     >
                       {isWorkoutCompleted(workout.id) ? "✓" : ""}
                     </button>
