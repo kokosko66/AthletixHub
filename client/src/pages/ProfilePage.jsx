@@ -119,7 +119,7 @@ export default function ProfilePage() {
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/register");
+    navigate("/login");
   };
 
   // Delete account function
