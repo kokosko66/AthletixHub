@@ -828,3 +828,373 @@
     margin-bottom: 1.5rem;
     border-left: 4px solid #d32f2f;
 }
+
+/* Add these styles to your existing MealPlanPage.css file */
+
+/* Styles for meal header actions */
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Delete button on meal card */
+.delete-meal-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.delete-meal-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+/* Delete confirmation dialog styles */
+.delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirmation-dialog {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirmation-dialog h3 {
+    margin-top: 0;
+    color: #ff4d4d;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff3333;
+}
+
+/* Food list styles enhancement */
+.food-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-info {
+    flex: 1;
+}
+
+.food-name {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.food-quantity {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.food-calories {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+/* Add these styles to your existing MealPlanPage.css file */
+
+/* Styles for meal header actions */
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Delete button on meal card */
+.delete-meal-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.delete-meal-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+/* Delete confirmation dialog styles */
+.delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirmation-dialog {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirmation-dialog h3 {
+    margin-top: 0;
+    color: #ff4d4d;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff3333;
+}
+
+/* Food list styles enhancement */
+.food-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-info {
+    flex: 1;
+}
+
+.food-name {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.food-quantity {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.food-calories {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+/* Add these styles to your existing MealPlanPage.css file */
+
+/* Meal action buttons container */
+.meal-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Edit button styling */
+.edit-meal-button {
+    background: none;
+    border: none;
+    color: #4a47a3;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.edit-meal-button:hover {
+    background-color: #4a47a3;
+    color: white;
+}
+
+/* Update header actions to accommodate both buttons */
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* When in edit mode, highlight form */
+.form-container.editing {
+    border-left: 4px solid #4a47a3;
+}
+
+/* Form title changes for edit mode */
+.form-title.editing {
+    color: #4a47a3;
+}
+
+/* Loading overlay for long operations */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+/* Enhanced food list styles */
+.food-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 8px;
+}
+
+.food-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.food-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.food-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.food-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}

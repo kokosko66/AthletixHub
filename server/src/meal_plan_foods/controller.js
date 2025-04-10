@@ -42,12 +42,32 @@ export const getMealPlanFoodByName = async (req, res) => {
   }
 };
 
-// Only update the addMealPlanFood function in meal_plan_foods/controller.js
+// Add function to delete all food associations for a meal plan
+export const deleteAllForMealPlan = async (req, res) => {
+  try {
+    const { mealPlanId } = req.params;
 
+    // Delete all food associations for this meal plan
+    const [result] = await pool.query(
+      "DELETE FROM MealPlanFoods WHERE meal_plan_id = ?",
+      [mealPlanId],
+    );
+
+    res.json({
+      message: "All food associations deleted successfully",
+      count: result.affectedRows,
+    });
+  } catch (error) {
+    console.error("Error deleting food associations:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Updated addMealPlanFood to support quantity
 export const addMealPlanFood = async (req, res) => {
   try {
     // Update the expected parameters to match what the frontend sends
-    const { meal_plan_id, food_id } = req.body;
+    const { meal_plan_id, food_id, quantity } = req.body;
 
     if (!meal_plan_id || !food_id) {
       return res.status(400).json({
@@ -56,12 +76,22 @@ export const addMealPlanFood = async (req, res) => {
       });
     }
 
-    await pool.query(queries.addMealPlanFood, [meal_plan_id, food_id]);
+    // Use updated query that includes quantity
+    if (quantity) {
+      await pool.query(queries.addMealPlanFoodWithQuantity, [
+        meal_plan_id,
+        food_id,
+        quantity,
+      ]);
+    } else {
+      await pool.query(queries.addMealPlanFood, [meal_plan_id, food_id]);
+    }
 
     res.status(201).json({
       message: "Meal Plan Food association added successfully",
       meal_plan_id,
       food_id,
+      quantity: quantity || null,
     });
   } catch (error) {
     console.error("Error adding meal plan food association:", error);

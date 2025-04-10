@@ -42,18 +42,18 @@ export const getMealPlanByName = async (req, res) => {
   }
 };
 
+// New function to get foods associated with a meal plan
 export const getMealPlanFoods = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query(
-      `
-      SELECT f.id, f.name, f.calories, mpf.*
-      FROM MealPlanFoods mpf
-      JOIN Foods f ON mpf.food_id = f.id
+    const query = `
+      SELECT f.id, f.name, f.calories, mpf.quantity
+      FROM Foods f
+      JOIN MealPlanFoods mpf ON f.id = mpf.food_id
       WHERE mpf.meal_plan_id = ?
-    `,
-      [id],
-    );
+    `;
+
+    const [rows] = await pool.query(query, [id]);
     res.json(rows);
   } catch (error) {
     console.error("Error fetching meal plan foods:", error);
@@ -93,14 +93,45 @@ export const updateMealPlan = async (req, res) => {
   }
 };
 
+// Simplified deleteMealPlan function with sequential deletes
 export const deleteMealPlan = async (req, res) => {
   try {
     const { id } = req.params;
-    const [result] = await pool.query(queries.deleteMealPlan, [id]);
-    if (result.affectedRows === 0)
+
+    // 1. First, delete related records from MealPlanFoods
+    try {
+      await pool.query("DELETE FROM MealPlanFoods WHERE meal_plan_id = ?", [
+        id,
+      ]);
+      console.log("Deleted associated foods");
+    } catch (error) {
+      console.error("Error deleting associated foods:", error);
+      // Continue anyway to try deleting the meal plan
+    }
+
+    // 2. Delete from CompletedMeals
+    try {
+      await pool.query("DELETE FROM CompletedMeals WHERE meal_plan_id = ?", [
+        id,
+      ]);
+      console.log("Deleted completed meal records");
+    } catch (error) {
+      console.error("Error deleting completed meals:", error);
+      // Continue anyway to try deleting the meal plan
+    }
+
+    // 3. Finally, delete the meal plan
+    const [result] = await pool.query("DELETE FROM MealPlans WHERE id = ?", [
+      id,
+    ]);
+
+    if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Meal Plan not found" });
+    }
+
     res.json({ message: "Meal Plan deleted successfully" });
   } catch (error) {
+    console.error("Error in deleteMealPlan:", error);
     res.status(500).json({ error: error.message });
   }
 };

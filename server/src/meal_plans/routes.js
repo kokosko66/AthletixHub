@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/meal_plans", getMealPlans);
 router.get("/meal_plans/id/:id", getMealPlanById);
 router.get("/meal_plans/name/:name", getMealPlanByName);
-router.get("/meal_plans/:id/foods", getMealPlanFoods);
+router.get("/meal_plans/id/:id/foods", getMealPlanFoods);
 router.post("/meal_plans", addMealPlan);
 router.put("/meal_plans/:id", updateMealPlan);
 router.delete("/meal_plans/:id", deleteMealPlan);
