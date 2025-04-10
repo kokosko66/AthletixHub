@@ -18,6 +18,9 @@ export default function WorkoutsPage() {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0],
   ); // Today's date in YYYY-MM-DD format
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingWorkoutId, setEditingWorkoutId] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -122,9 +125,15 @@ export default function WorkoutsPage() {
     setExercises(updatedExercises);
   };
 
-  const createWorkout = () => {
+  const createWorkout = async () => {
     if (!user) {
       console.error("User not logged in");
+      return;
+    }
+
+    // If we're editing, update the workout instead of creating a new one
+    if (isEditing && editingWorkoutId) {
+      await updateWorkout();
       return;
     }
 
@@ -134,16 +143,117 @@ export default function WorkoutsPage() {
       userId: user.id,
     };
 
-    axios
-      .post("http://localhost:3000/api/workouts", newWorkout)
-      .then(() => {
-        setIsDialogOpen(false);
-        setNewWorkoutName("");
-        setExercises([{ name: "", repetitions: "" }]);
+    try {
+      setLoading(true);
+      await axios.post("http://localhost:3000/api/workouts", newWorkout);
 
-        fetchUserWorkouts();
-      })
-      .catch((error) => console.log(error));
+      setIsDialogOpen(false);
+      setNewWorkoutName("");
+      setExercises([{ name: "", repetitions: "" }]);
+
+      await fetchUserWorkouts();
+      alert("Workout created successfully!");
+    } catch (error) {
+      console.error("Error creating workout:", error);
+      alert("Failed to create workout. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to set up editing a workout
+  const editWorkout = (workout) => {
+    // Set editing state
+    setIsEditing(true);
+    setEditingWorkoutId(workout.id);
+
+    // Populate the form with the workout's data
+    setNewWorkoutName(workout.name);
+    setExercises(
+      workout.exercises.map((ex) => ({
+        id: ex.id,
+        name: ex.name,
+        repetitions: ex.repetitions,
+      })),
+    );
+
+    // Open the dialog
+    setIsDialogOpen(true);
+  };
+
+  // Function to update a workout
+  const updateWorkout = async () => {
+    try {
+      setLoading(true);
+
+      // 1. Update the workout name
+      await axios.put(
+        `http://localhost:3000/api/workouts/${editingWorkoutId}`,
+        {
+          name: newWorkoutName,
+        },
+      );
+
+      // 2. Delete all existing exercise associations
+      // We'll use a simpler approach: delete all and recreate
+      const validExercises = exercises.filter(
+        (ex) => ex.name.trim() !== "" && ex.repetitions,
+      );
+
+      // Create or update each exercise and associate them with the workout
+      for (const exercise of validExercises) {
+        try {
+          let exerciseId;
+
+          // If exercise has an ID, it already exists, so we'll update it
+          if (exercise.id) {
+            await axios.put(
+              `http://localhost:3000/api/exercises/${exercise.id}`,
+              {
+                name: exercise.name,
+                repetitions: exercise.repetitions,
+              },
+            );
+            exerciseId = exercise.id;
+          } else {
+            // Otherwise create a new exercise
+            const response = await axios.post(
+              "http://localhost:3000/api/exercises",
+              {
+                name: exercise.name,
+                repetitions: exercise.repetitions,
+              },
+            );
+            exerciseId = response.data.id;
+          }
+
+          // Make sure the exercise is associated with the workout
+          await axios.post("http://localhost:3000/api/workout_exercises", {
+            workout_id: editingWorkoutId,
+            exercise_id: exerciseId,
+          });
+        } catch (error) {
+          console.error("Error processing exercise:", error);
+        }
+      }
+
+      // 3. Refresh workouts list
+      await fetchUserWorkouts();
+
+      // 4. Reset form and state
+      setNewWorkoutName("");
+      setExercises([{ name: "", repetitions: "" }]);
+      setIsDialogOpen(false);
+      setIsEditing(false);
+      setEditingWorkoutId(null);
+
+      alert("Workout updated successfully!");
+    } catch (error) {
+      console.error("Error updating workout:", error);
+      alert("Failed to update workout. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const selectWorkout = async (workoutId) => {
@@ -223,6 +333,51 @@ export default function WorkoutsPage() {
     }
   };
 
+  // Function to delete a workout
+  const deleteWorkout = async (workoutId) => {
+    try {
+      setLoading(true);
+
+      // Delete the workout
+      await axios.delete(`http://localhost:3000/api/workouts/${workoutId}`);
+
+      // Update the state by removing the deleted workout
+      setWorkouts((prevWorkouts) =>
+        prevWorkouts.filter((workout) => workout.id !== workoutId),
+      );
+
+      // Update userWorkouts state
+      setUserWorkouts((prevUserWorkouts) =>
+        prevUserWorkouts.filter((uw) => uw.workout_id !== workoutId),
+      );
+
+      // Also remove from completedWorkouts if it was marked as completed
+      setCompletedWorkouts((prevCompletedWorkouts) =>
+        prevCompletedWorkouts.filter((cw) => cw.workout_id !== workoutId),
+      );
+
+      // Close the confirmation dialog
+      setShowDeleteConfirm(null);
+
+      // Show success message
+      alert("Workout deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+      alert("Failed to delete workout. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Cancel form
+  const handleCancelForm = () => {
+    setIsDialogOpen(false);
+    setIsEditing(false);
+    setEditingWorkoutId(null);
+    setNewWorkoutName("");
+    setExercises([{ name: "", repetitions: "" }]);
+  };
+
   const isWorkoutCompleted = (workoutId) => {
     return completedWorkouts.some((cw) => cw.workout_id === workoutId);
   };
@@ -256,7 +411,13 @@ export default function WorkoutsPage() {
 
             <button
               className="create-workout-button"
-              onClick={() => setIsDialogOpen(true)}
+              onClick={() => {
+                setIsEditing(false);
+                setEditingWorkoutId(null);
+                setNewWorkoutName("");
+                setExercises([{ name: "", repetitions: "" }]);
+                setIsDialogOpen(true);
+              }}
             >
               <span className="button-icon">+</span>
               Create New Workout
@@ -278,9 +439,27 @@ export default function WorkoutsPage() {
               >
                 <div className="workout-card-header">
                   <h3>{workout.name}</h3>
-                  <span className="exercise-count">
-                    {workout.exercises.length} exercises
-                  </span>
+                  <div className="workout-header-actions">
+                    <span className="exercise-count">
+                      {workout.exercises.length} exercises
+                    </span>
+                    <div className="workout-action-buttons">
+                      <button
+                        className="edit-workout-button"
+                        onClick={() => editWorkout(workout)}
+                        title="Edit workout"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        className="delete-workout-button"
+                        onClick={() => setShowDeleteConfirm(workout.id)}
+                        title="Delete workout"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="workout-card-content">
@@ -328,9 +507,11 @@ export default function WorkoutsPage() {
         )}
       </div>
 
-      <Dialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+      <Dialog isOpen={isDialogOpen} onClose={handleCancelForm}>
         <div className="dialog-container">
-          <h2 className="dialog-title">Create a New Workout</h2>
+          <h2 className="dialog-title">
+            {isEditing ? "Edit Workout" : "Create a New Workout"}
+          </h2>
 
           <div className="dialog-form">
             <div className="form-group">
@@ -400,12 +581,39 @@ export default function WorkoutsPage() {
                   exercises.some((ex) => !ex.name || !ex.repetitions)
                 }
               >
-                Create Workout
+                {isEditing ? "Update Workout" : "Create Workout"}
               </button>
             </div>
           </div>
         </div>
       </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && (
+        <div className="delete-confirmation-overlay">
+          <div className="delete-confirmation-dialog">
+            <h3>Delete Workout</h3>
+            <p>
+              Are you sure you want to delete this workout? This action cannot
+              be undone and will remove all associated exercises.
+            </p>
+            <div className="delete-confirmation-actions">
+              <button
+                className="cancel-btn"
+                onClick={() => setShowDeleteConfirm(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="confirm-delete-btn"
+                onClick={() => deleteWorkout(showDeleteConfirm)}
+              >
+                Delete Workout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

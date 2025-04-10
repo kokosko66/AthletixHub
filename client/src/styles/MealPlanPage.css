@@ -251,8 +251,6 @@
     background-color: #4338ca;
 }
 
-/* Add these styles to your MealPlanPage.css file */
-
 .top-controls {
     display: flex;
     justify-content: space-between;
@@ -369,7 +367,6 @@
     color: #888;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .top-controls {
         flex-direction: column;
@@ -393,8 +390,6 @@
     }
 }
 
-/* MealPlanPage.css */
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -412,7 +407,6 @@
     margin-bottom: 2rem;
 }
 
-/* Top Controls */
 .top-controls {
     display: flex;
     justify-content: space-between;
@@ -468,7 +462,6 @@
     font-size: 1.2rem;
 }
 
-/* Form */
 .form-container {
     background-color: white;
     border-radius: 8px;
@@ -584,7 +577,6 @@
     cursor: not-allowed;
 }
 
-/* Meal Cards */
 .meal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -775,7 +767,6 @@
     color: #888;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -827,4 +818,353 @@
     border-radius: 4px;
     margin-bottom: 1.5rem;
     border-left: 4px solid #d32f2f;
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-meal-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.delete-meal-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirmation-dialog {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirmation-dialog h3 {
+    margin-top: 0;
+    color: #ff4d4d;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff3333;
+}
+
+.food-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-info {
+    flex: 1;
+}
+
+.food-name {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.food-quantity {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.food-calories {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-meal-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.delete-meal-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.delete-confirmation-dialog {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirmation-dialog h3 {
+    margin-top: 0;
+    color: #ff4d4d;
+}
+
+.delete-confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #ff3333;
+}
+
+.food-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.food-item:last-child {
+    border-bottom: none;
+}
+
+.food-info {
+    flex: 1;
+}
+
+.food-name {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.food-quantity {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.food-calories {
+    font-weight: 500;
+    color: #4a47a3;
+}
+
+.meal-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-meal-button {
+    background: none;
+    border: none;
+    color: #4a47a3;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.edit-meal-button:hover {
+    background-color: #4a47a3;
+    color: white;
+}
+
+.meal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-container.editing {
+    border-left: 4px solid #4a47a3;
+}
+
+.form-title.editing {
+    color: #4a47a3;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.food-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 8px;
+}
+
+.food-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.food-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.food-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.food-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }

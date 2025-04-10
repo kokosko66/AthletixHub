@@ -4,7 +4,6 @@
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Loading animation */
 .loading-container {
     display: flex;
     flex-direction: column;
@@ -32,14 +31,12 @@
     }
 }
 
-/* Dashboard container */
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 30px 20px;
 }
 
-/* Profile header */
 .profile-header {
     display: flex;
     align-items: center;
@@ -86,14 +83,12 @@
     margin: 0;
 }
 
-/* Dashboard grid */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
 
-/* Dashboard cards */
 .dashboard-card {
     background-color: white;
     border-radius: 12px;
@@ -118,7 +113,6 @@
     margin-bottom: 20px;
 }
 
-/* Stats container */
 .stats-container {
     display: flex;
     justify-content: space-around;
@@ -137,7 +131,6 @@
     color: #555;
 }
 
-/* Skills styling */
 .skills-container {
     display: flex;
     flex-direction: column;
@@ -169,7 +162,6 @@
     transition: width 1s ease-in-out;
 }
 
-/* Comparison styling */
 .comparison-container {
     margin-bottom: 20px;
 }
@@ -212,7 +204,6 @@
     color: #666;
 }
 
-/* Activity chart */
 .activity-chart {
     display: flex;
     justify-content: space-between;
@@ -240,7 +231,6 @@
     color: #666;
 }
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -369,9 +359,6 @@
     }
 }
 
-/* Additional CSS to be added to your existing ProfilePage.css */
-
-/* Profile container */
 .profile-container {
     width: 100%;
     max-width: 1200px;
@@ -379,7 +366,6 @@
     padding: 2rem;
 }
 
-/* Profile tabs */
 .profile-tabs {
     display: flex;
     border-bottom: 1px solid #e0e0e0;
@@ -417,7 +403,6 @@
     background-color: #4a47a3;
 }
 
-/* Chat container */
 .chat-container-wrapper {
     background-color: white;
     border-radius: 8px;
@@ -441,9 +426,6 @@
     }
 }
 
-/* Additional CSS to be added to your existing ProfilePage.css */
-
-/* Profile actions (logout and delete buttons) */
 .profile-actions {
     display: flex;
     gap: 1rem;
@@ -478,7 +460,6 @@
     background-color: #ff3333;
 }
 
-/* Delete account confirmation dialog */
 .delete-confirmation-overlay {
     position: fixed;
     top: 0;
@@ -541,7 +522,6 @@
     background-color: #ff3333;
 }
 
-/* Profile container */
 .profile-container {
     width: 100%;
     max-width: 1200px;
@@ -549,7 +529,6 @@
     padding: 2rem;
 }
 
-/* Profile tabs */
 .profile-tabs {
     display: flex;
     border-bottom: 1px solid #e0e0e0;
@@ -587,7 +566,6 @@
     background-color: #4a47a3;
 }
 
-/* Chat container */
 .chat-container-wrapper {
     background-color: white;
     border-radius: 8px;
@@ -596,7 +574,6 @@
     margin-top: 2rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .profile-container {
         padding: 1rem;
@@ -612,9 +589,6 @@
     }
 }
 
-/* Add these styles to your ProfilePage.css */
-
-/* Workout History Card */
 .workout-history-card {
     grid-column: span 2;
 }
@@ -691,7 +665,6 @@
     min-height: 300px;
 }
 
-/* Day View */
 .completed-workouts-list {
     display: flex;
     flex-direction: column;
@@ -740,7 +713,6 @@
     color: #666;
 }
 
-/* Week View */
 .week-view {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -825,7 +797,6 @@
     text-align: center;
 }
 
-/* Month View */
 .month-view {
     width: 100%;
 }
@@ -893,7 +864,6 @@
     font-weight: bold;
 }
 
-/* Stats Card */
 .workout-stats-card {
     grid-column: span 2;
 }
@@ -934,7 +904,6 @@
     color: #666;
 }
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
     .week-view {
         grid-template-columns: repeat(4, 1fr);
@@ -982,9 +951,6 @@
     }
 }
 
-/* Add these styles to your ProfilePage.css file */
-
-/* Dashboard type selector */
 .dashboard-type-selector {
     display: flex;
     gap: 1rem;
@@ -1007,12 +973,10 @@
     border-color: #4a47a3;
 }
 
-/* Shared card class */
 .history-card {
     grid-column: span 2;
 }
 
-/* General history elements */
 .history-header {
     display: flex;
     justify-content: space-between;
@@ -1024,7 +988,6 @@
     min-height: 300px;
 }
 
-/* Meal specific styles */
 .has-meals {
     border-left: 3px solid #ff9800 !important;
 }

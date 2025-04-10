@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const MealPlanPage = () => {
   const [meals, setMeals] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingMealId, setEditingMealId] = useState(null);
   const [newMeal, setNewMeal] = useState({
     name: "",
     foods: [{ name: "", calories: 0, quantity: "" }],
@@ -18,6 +20,8 @@ const MealPlanPage = () => {
     new Date().toISOString().split("T")[0],
   ); // Today's date
   const [errorMessage, setErrorMessage] = useState("");
+  const [mealFoods, setMealFoods] = useState({}); // Store foods for each meal
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null); // Store the meal ID to delete
 
   const navigate = useNavigate();
 
@@ -33,7 +37,7 @@ const MealPlanPage = () => {
     }
   }, [navigate]);
 
-  // Fetch meals from the server
+  // Fetch meals and foods from the server
   useEffect(() => {
     if (user) {
       setLoading(true);
@@ -42,6 +46,10 @@ const MealPlanPage = () => {
         .get("http://localhost:3000/api/meal_plans")
         .then((response) => {
           setMeals(response.data);
+          // Fetch foods for each meal plan
+          response.data.forEach((meal) => {
+            fetchMealFoods(meal.id);
+          });
           setLoading(false);
         })
         .catch((error) => {
@@ -53,6 +61,24 @@ const MealPlanPage = () => {
       fetchCompletedMeals();
     }
   }, [user, selectedDate]);
+
+  // Function to fetch foods for a specific meal plan
+  const fetchMealFoods = async (mealPlanId) => {
+    try {
+      // Fetch the foods associated with this meal plan
+      const response = await axios.get(
+        `http://localhost:3000/api/meal_plans/id/${mealPlanId}/foods`,
+      );
+
+      // Store the foods in the mealFoods state
+      setMealFoods((prev) => ({
+        ...prev,
+        [mealPlanId]: response.data,
+      }));
+    } catch (error) {
+      console.error(`Error fetching foods for meal plan ${mealPlanId}:`, error);
+    }
+  };
 
   const fetchCompletedMeals = async () => {
     if (!user) return;
@@ -134,11 +160,12 @@ const MealPlanPage = () => {
     }
   };
 
-  const associateFoodWithMeal = async (mealPlanId, foodId) => {
+  const associateFoodWithMeal = async (mealPlanId, foodId, quantity) => {
     try {
       const data = {
         meal_plan_id: mealPlanId,
         food_id: foodId,
+        quantity: quantity || null,
       };
 
       console.log("Associating food with meal:", data);
@@ -155,6 +182,140 @@ const MealPlanPage = () => {
     }
   };
 
+  // Function to delete a meal plan
+  const deleteMealPlan = async (mealPlanId) => {
+    try {
+      setLoading(true);
+
+      // Delete the meal plan
+      await axios.delete(`http://localhost:3000/api/meal_plans/${mealPlanId}`);
+
+      // Update the state by removing the deleted meal plan
+      setMeals((prevMeals) =>
+        prevMeals.filter((meal) => meal.id !== mealPlanId),
+      );
+
+      // Also remove from mealFoods state
+      setMealFoods((prevMealFoods) => {
+        const updatedMealFoods = { ...prevMealFoods };
+        delete updatedMealFoods[mealPlanId];
+        return updatedMealFoods;
+      });
+
+      // Close the confirmation dialog
+      setShowDeleteConfirm(null);
+
+      // Show success message
+      alert("Meal plan deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting meal plan:", error);
+      alert("Failed to delete meal plan. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to edit a meal plan
+  const editMealPlan = (mealId) => {
+    // Find the meal to edit
+    const mealToEdit = meals.find((meal) => meal.id === mealId);
+    const foodsToEdit = mealFoods[mealId] || [];
+
+    // Prepare the edit form data
+    setNewMeal({
+      name: mealToEdit.name,
+      foods:
+        foodsToEdit.length > 0
+          ? foodsToEdit.map((food) => ({
+              id: food.id,
+              name: food.name,
+              calories: food.calories,
+              quantity: food.quantity || "",
+            }))
+          : [{ name: "", calories: 0, quantity: "" }],
+    });
+
+    // Set editing state
+    setIsEditing(true);
+    setEditingMealId(mealId);
+    setShowForm(true);
+  };
+
+  // Function to update a meal plan - updated API endpoints
+  const updateMealPlan = async () => {
+    if (!newMeal.name.trim()) {
+      setErrorMessage("Please enter a meal name");
+      return;
+    }
+
+    const validFoods = newMeal.foods.filter((food) => food.name.trim() !== "");
+    if (validFoods.length === 0) {
+      setErrorMessage("Please add at least one food item");
+      return;
+    }
+
+    setErrorMessage("");
+    setLoading(true);
+
+    try {
+      // 1. Update the meal plan name
+      await axios.put(`http://localhost:3000/api/meal_plans/${editingMealId}`, {
+        name: newMeal.name,
+      });
+
+      // 2. Delete existing associations between meal plan and foods
+      await axios.delete(
+        `http://localhost:3000/api/meal_plan_foods/meal/${editingMealId}`,
+      );
+
+      // 3. Create new food associations
+      for (const food of validFoods) {
+        try {
+          const foodId = await createFood(food.name, food.calories);
+          await associateFoodWithMeal(editingMealId, foodId, food.quantity);
+        } catch (foodError) {
+          console.error("Error processing food:", food.name, foodError);
+        }
+      }
+
+      // 4. Refresh meals list
+      const mealsResponse = await axios.get(
+        "http://localhost:3000/api/meal_plans",
+      );
+      setMeals(mealsResponse.data);
+
+      // 5. Refresh foods for the updated meal plan
+      fetchMealFoods(editingMealId);
+
+      // Reset form and state
+      setNewMeal({
+        name: "",
+        foods: [{ name: "", calories: 0, quantity: "" }],
+      });
+      setShowForm(false);
+      setIsEditing(false);
+      setEditingMealId(null);
+
+      alert("Meal plan updated successfully!");
+    } catch (error) {
+      console.error("Error updating meal plan:", error);
+
+      // Enhanced error message
+      let errorMsg = "Failed to update meal plan.";
+      if (error.response) {
+        errorMsg += ` Server error: ${error.response.status} - ${error.response.data.message || error.response.statusText}`;
+      } else if (error.request) {
+        errorMsg += " Server did not respond. Please check your connection.";
+      } else {
+        errorMsg += ` ${error.message}`;
+      }
+
+      setErrorMessage(errorMsg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAddMeal = async () => {
     if (!newMeal.name.trim()) {
       setErrorMessage("Please enter a meal name");
@@ -168,8 +329,16 @@ const MealPlanPage = () => {
     }
 
     setErrorMessage("");
+    setLoading(true);
 
     try {
+      // If editing, update the meal plan
+      if (isEditing && editingMealId) {
+        await updateMealPlan();
+        return;
+      }
+
+      // Otherwise create a new meal plan
       // Step 1: Create the meal plan
       const mealPlanId = await createMealPlan(newMeal.name);
       console.log("Created meal plan with ID:", mealPlanId);
@@ -180,7 +349,7 @@ const MealPlanPage = () => {
           const foodId = await createFood(food.name, food.calories);
           console.log("Food ID:", foodId);
 
-          await associateFoodWithMeal(mealPlanId, foodId);
+          await associateFoodWithMeal(mealPlanId, foodId, food.quantity);
         } catch (foodError) {
           console.error("Error processing food:", food.name, foodError);
         }
@@ -191,6 +360,9 @@ const MealPlanPage = () => {
         "http://localhost:3000/api/meal_plans",
       );
       setMeals(mealsResponse.data);
+
+      // Fetch foods for the new meal plan
+      fetchMealFoods(mealPlanId);
 
       // Reset form
       setNewMeal({
@@ -217,6 +389,8 @@ const MealPlanPage = () => {
       }
 
       setErrorMessage(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -241,6 +415,7 @@ const MealPlanPage = () => {
   };
 
   const calculateTotalCalories = (foods) => {
+    if (!foods || foods.length === 0) return 0;
     return foods.reduce((sum, food) => sum + (parseInt(food.calories) || 0), 0);
   };
 
@@ -273,6 +448,18 @@ const MealPlanPage = () => {
 
   const isMealCompleted = (mealId) => {
     return completedMeals.some((cm) => cm.meal_plan_id === mealId);
+  };
+
+  // Cancel form
+  const handleCancelForm = () => {
+    setShowForm(false);
+    setIsEditing(false);
+    setEditingMealId(null);
+    setNewMeal({
+      name: "",
+      foods: [{ name: "", calories: 0, quantity: "" }],
+    });
+    setErrorMessage("");
   };
 
   if (loading) {
@@ -319,7 +506,9 @@ const MealPlanPage = () => {
 
         {showForm && (
           <div className="form-container">
-            <h2 className="form-title">Create New Meal</h2>
+            <h2 className="form-title">
+              {isEditing ? "Edit Meal Plan" : "Create New Meal"}
+            </h2>
 
             {errorMessage && (
               <div className="error-message">{errorMessage}</div>
@@ -395,13 +584,7 @@ const MealPlanPage = () => {
             </div>
 
             <div className="form-buttons">
-              <button
-                className="cancel-button"
-                onClick={() => {
-                  setShowForm(false);
-                  setErrorMessage("");
-                }}
-              >
+              <button className="cancel-button" onClick={handleCancelForm}>
                 Cancel
               </button>
               <button
@@ -411,7 +594,7 @@ const MealPlanPage = () => {
                   !newMeal.name || newMeal.foods.every((food) => !food.name)
                 }
               >
-                Save Meal
+                {isEditing ? "Update Meal" : "Save Meal"}
               </button>
             </div>
           </div>
@@ -430,21 +613,59 @@ const MealPlanPage = () => {
               >
                 <div className="meal-header">
                   <h2 className="meal-title">{meal.name}</h2>
-                  <p className="meal-count">
-                    {/* We don't have food count yet, will be implemented when foods are fetched */}
-                    Foods
-                  </p>
+                  <div className="meal-header-actions">
+                    <p className="meal-count">
+                      {mealFoods[meal.id] ? mealFoods[meal.id].length : 0} foods
+                    </p>
+                    <div className="meal-action-buttons">
+                      <button
+                        className="edit-meal-button"
+                        onClick={() => editMealPlan(meal.id)}
+                        title="Edit meal plan"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        className="delete-meal-button"
+                        onClick={() => setShowDeleteConfirm(meal.id)}
+                        title="Delete meal plan"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="meal-content">
-                  {/* This will be updated when we fetch foods */}
-                  <div className="food-list-placeholder">
-                    <p>Food items will be displayed here</p>
-                  </div>
+                  {mealFoods[meal.id] && mealFoods[meal.id].length > 0 ? (
+                    <div className="food-list">
+                      {mealFoods[meal.id].map((food) => (
+                        <div key={food.id} className="food-item">
+                          <div className="food-info">
+                            <h4 className="food-name">{food.name}</h4>
+                            {food.quantity && (
+                              <p className="food-quantity">{food.quantity}</p>
+                            )}
+                          </div>
+                          <div className="food-calories">
+                            {food.calories} cal
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="food-list-placeholder">
+                      <p>No food items available</p>
+                    </div>
+                  )}
 
                   <div className="total-calories">
                     <p>Total Calories</p>
-                    <p>Calculating...</p>
+                    <p>
+                      {mealFoods[meal.id]
+                        ? calculateTotalCalories(mealFoods[meal.id])
+                        : "No foods"}
+                    </p>
                   </div>
 
                   <div className="meal-actions">
@@ -469,6 +690,33 @@ const MealPlanPage = () => {
             ))
           )}
         </div>
+
+        {/* Delete Confirmation Dialog */}
+        {showDeleteConfirm && (
+          <div className="delete-confirmation-overlay">
+            <div className="delete-confirmation-dialog">
+              <h3>Delete Meal Plan</h3>
+              <p>
+                Are you sure you want to delete this meal plan? This action
+                cannot be undone and will remove all associated foods.
+              </p>
+              <div className="delete-confirmation-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowDeleteConfirm(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="confirm-delete-btn"
+                  onClick={() => deleteMealPlan(showDeleteConfirm)}
+                >
+                  Delete Meal Plan
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
