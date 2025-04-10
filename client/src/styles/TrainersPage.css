@@ -88,7 +88,6 @@
     background-color: #5a9b5c;
 }
 
-/* Loading state */
 .loading-container {
     display: flex;
     flex-direction: column;
@@ -195,7 +194,6 @@
     background-color: #5a9b5c;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .trainers-grid {
         grid-template-columns: 1fr;

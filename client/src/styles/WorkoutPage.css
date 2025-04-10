@@ -284,7 +284,6 @@
     cursor: not-allowed;
 }
 
-/* Dialog buttons */
 .dialog-buttons {
     display: flex;
     gap: 15px;
@@ -363,8 +362,6 @@
         align-self: flex-end;
     }
 }
-
-/* Add these styles to your WorkoutPage.css file */
 
 .workout-actions {
     display: flex;
@@ -449,15 +446,12 @@
     }
 }
 
-/* Add these styles to your existing WorkoutPage.css file */
-/* Workout header actions to include delete button */
 .workout-header-actions {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* Delete button on workout card */
 .delete-workout-button {
     background: none;
     border: none;
@@ -480,7 +474,6 @@
     color: white;
 }
 
-/* Delete confirmation dialog styles */
 .delete-confirmation-overlay {
     position: fixed;
     top: 0;
@@ -543,30 +536,24 @@
     background-color: #ff3333;
 }
 
-/* Adjust header spacing for the delete button */
 .workout-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Add these styles to your existing WorkoutPage.css file */
-
-/* Workout header actions to include delete button */
 .workout-header-actions {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* Action buttons container */
 .workout-action-buttons {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* Delete button on workout card */
 .delete-workout-button {
     background: none;
     border: none;
@@ -589,7 +576,6 @@
     color: white;
 }
 
-/* Edit button on workout card */
 .edit-workout-button {
     background: none;
     border: none;
@@ -612,7 +598,6 @@
     color: white;
 }
 
-/* Delete confirmation dialog styles */
 .delete-confirmation-overlay {
     position: fixed;
     top: 0;
@@ -675,7 +660,6 @@
     background-color: #ff3333;
 }
 
-/* Adjust header spacing for the buttons */
 .workout-card-header {
     display: flex;
     justify-content: space-between;
