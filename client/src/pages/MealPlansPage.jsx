@@ -33,15 +33,41 @@ const MealPlanPage = () => {
     }
   }, [navigate]);
 
-  // Fetch meals from the server
+  // Inside the useEffect where you fetch meal plans
   useEffect(() => {
     if (user) {
       setLoading(true);
       // Fetch meal plans
       axios
         .get("http://localhost:3000/api/meal_plans")
-        .then((response) => {
-          setMeals(response.data);
+        .then(async (response) => {
+          const mealPlansData = response.data;
+
+          // For each meal plan, fetch its foods
+          const mealPlansWithFoods = await Promise.all(
+            mealPlansData.map(async (mealPlan) => {
+              try {
+                const foodsResponse = await axios.get(
+                  `http://localhost:3000/api/meal_plans/${mealPlan.id}/foods`,
+                );
+                return {
+                  ...mealPlan,
+                  foods: foodsResponse.data || [],
+                };
+              } catch (error) {
+                console.error(
+                  `Error fetching foods for meal plan ${mealPlan.id}:`,
+                  error,
+                );
+                return {
+                  ...mealPlan,
+                  foods: [],
+                };
+              }
+            }),
+          );
+
+          setMeals(mealPlansWithFoods);
           setLoading(false);
         })
         .catch((error) => {
@@ -152,6 +178,19 @@ const MealPlanPage = () => {
     } catch (error) {
       console.error("Error in associateFoodWithMeal:", error);
       throw error;
+    }
+  };
+
+  const fetchMealPlanFoods = async (mealPlanId) => {
+    try {
+      // This endpoint should return foods associated with the meal plan
+      const response = await axios.get(
+        `http://localhost:3000/api/meal_plans/${mealPlanId}/foods`,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching foods for meal plan ${mealPlanId}:`, error);
+      return [];
     }
   };
 
@@ -431,20 +470,38 @@ const MealPlanPage = () => {
                 <div className="meal-header">
                   <h2 className="meal-title">{meal.name}</h2>
                   <p className="meal-count">
-                    {/* We don't have food count yet, will be implemented when foods are fetched */}
-                    Foods
+                    {meal.foods ? meal.foods.length : 0} foods
                   </p>
                 </div>
 
                 <div className="meal-content">
-                  {/* This will be updated when we fetch foods */}
-                  <div className="food-list-placeholder">
-                    <p>Food items will be displayed here</p>
-                  </div>
+                  {meal.foods && meal.foods.length > 0 ? (
+                    meal.foods.map((food, idx) => (
+                      <div key={idx} className="food-item">
+                        <div className="food-info">
+                          <p className="food-name">{food.name}</p>
+                          <p className="food-quantity">
+                            {food.quantity || "Not specified"}
+                          </p>
+                        </div>
+                        <div className="food-calories">
+                          <p>{food.calories} cals</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="food-list-placeholder">
+                      <p>No food items available</p>
+                    </div>
+                  )}
 
                   <div className="total-calories">
                     <p>Total Calories</p>
-                    <p>Calculating...</p>
+                    <p>
+                      {meal.foods && meal.foods.length > 0
+                        ? calculateTotalCalories(meal.foods)
+                        : "No foods"}
+                    </p>
                   </div>
 
                   <div className="meal-actions">
@@ -464,6 +521,8 @@ const MealPlanPage = () => {
                       {isMealCompleted(meal.id) ? "✓" : ""}
                     </button>
                   </div>
+
+                  {/* Rest of the meal card content */}
                 </div>
               </div>
             ))

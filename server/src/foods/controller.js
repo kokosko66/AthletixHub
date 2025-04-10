@@ -45,8 +45,11 @@ export const getFoodByName = async (req, res) => {
 export const addFood = async (req, res) => {
   try {
     const { name, calories } = req.body;
-    await pool.query(queries.addFood, [name, calories]);
-    res.status(201).json({ message: "Food added successfully" });
+    const [result] = await pool.query(queries.addFood, [name, calories]);
+    res.status(201).json({
+      message: "Food added successfully",
+      id: result.insertId,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

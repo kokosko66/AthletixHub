@@ -42,6 +42,25 @@ export const getMealPlanByName = async (req, res) => {
   }
 };
 
+export const getMealPlanFoods = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await pool.query(
+      `
+      SELECT f.id, f.name, f.calories, mpf.*
+      FROM MealPlanFoods mpf
+      JOIN Foods f ON mpf.food_id = f.id
+      WHERE mpf.meal_plan_id = ?
+    `,
+      [id],
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching meal plan foods:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Only update the addMealPlan function in meal_plans/controller.js
 
 export const addMealPlan = async (req, res) => {
