@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="#4a47a3"/>
+
+  <!-- Stylized "A" for Athletix with dumbbell incorporated -->
+  <g fill="#ffffff">
+    <!-- Left weight of dumbbell -->
+    <rect x="6" y="14" width="4" height="10" rx="1" />
+
+    <!-- Right weight of dumbbell -->
+    <rect x="22" y="14" width="4" height="10" rx="1" />
+
+    <!-- Bar connecting weights (forms crossbar of "A") -->
+    <rect x="10" y="17" width="12" height="4" rx="1" />
+
+    <!-- Stylized "A" shape -->
+    <polygon points="16,5 21,23 19,23 18,20 14,20 13,23 11,23 16,5" />
+  </g>
+</svg>

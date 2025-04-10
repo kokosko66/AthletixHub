@@ -673,3 +673,60 @@
 .dialog-container.editing {
     border-left: 4px solid #4a47a3;
 }
+
+.workout-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.add-to-plan-button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background-color: #4a47a3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.add-to-plan-button:hover {
+    background-color: #3d3a86;
+}
+
+.add-to-plan-button.completed {
+    background-color: #e0e0e0;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+/* Update existing styles to match the new layout */
+.workout-card-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.workout-buttons {
+    display: flex;
+    width: 100%;
+}
+
+.select-workout-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #4a47a3;
+    color: white;
+}
