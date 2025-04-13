@@ -393,9 +393,7 @@ export default function WorkoutsPage() {
       <div className="workout-container">
         <div className="workout-header">
           <h1>Workout Library</h1>
-          <p className="workout-subtitle">
-            Explore our collection of workouts or create your own
-          </p>
+          <p className="workout-subtitle">Create your own workout library</p>
 
           <div className="workout-actions">
             <div className="date-picker-container">
@@ -482,7 +480,7 @@ export default function WorkoutsPage() {
                     >
                       {isWorkoutCompleted(workout.id)
                         ? "Marked as Completed"
-                        : "Add To Workouts Completed Today"}
+                        : "Add To Completed Workouts"}
                     </button>
 
                     <button

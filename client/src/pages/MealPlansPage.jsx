@@ -41,9 +41,9 @@ const MealPlanPage = () => {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      // Fetch meal plans
+      // Fetch meal plans for the current user only
       axios
-        .get("http://localhost:3000/api/meal_plans")
+        .get(`http://localhost:3000/api/meal_plans/user/${user.id}`)
         .then((response) => {
           setMeals(response.data);
           // Fetch foods for each meal plan
@@ -93,7 +93,7 @@ const MealPlanPage = () => {
     }
   };
 
-  // In the createMealPlan function
+  // In the createMealPlan function - now associates meal with user
   const createMealPlan = async (mealName) => {
     try {
       // Format the date properly for MySQL
@@ -103,6 +103,7 @@ const MealPlanPage = () => {
       const mealData = {
         name: mealName,
         created_at: formattedDate,
+        user_id: user.id, // Associate meal with the current user
       };
 
       console.log("Creating meal plan with data:", mealData);
@@ -182,7 +183,7 @@ const MealPlanPage = () => {
     }
   };
 
-  // Function to delete a meal plan
+  // Function to delete a meal plan - verify user owns the meal plan
   const deleteMealPlan = async (mealPlanId) => {
     try {
       setLoading(true);
@@ -261,6 +262,7 @@ const MealPlanPage = () => {
       // 1. Update the meal plan name
       await axios.put(`http://localhost:3000/api/meal_plans/${editingMealId}`, {
         name: newMeal.name,
+        user_id: user.id, // Include user ID to verify ownership
       });
 
       // 2. Delete existing associations between meal plan and foods
@@ -278,9 +280,9 @@ const MealPlanPage = () => {
         }
       }
 
-      // 4. Refresh meals list
+      // 4. Refresh meals list for the current user
       const mealsResponse = await axios.get(
-        "http://localhost:3000/api/meal_plans",
+        `http://localhost:3000/api/meal_plans/user/${user.id}`,
       );
       setMeals(mealsResponse.data);
 
@@ -339,7 +341,7 @@ const MealPlanPage = () => {
       }
 
       // Otherwise create a new meal plan
-      // Step 1: Create the meal plan
+      // Step 1: Create the meal plan with user ID
       const mealPlanId = await createMealPlan(newMeal.name);
       console.log("Created meal plan with ID:", mealPlanId);
 
@@ -355,9 +357,9 @@ const MealPlanPage = () => {
         }
       }
 
-      // Step 3: Refresh meals list
+      // Step 3: Refresh meals list for the current user
       const mealsResponse = await axios.get(
-        "http://localhost:3000/api/meal_plans",
+        `http://localhost:3000/api/meal_plans/user/${user.id}`,
       );
       setMeals(mealsResponse.data);
 
@@ -481,9 +483,7 @@ const MealPlanPage = () => {
       <NavBar />
       <div className="container">
         <h1 className="page-title">Meal Plan Library</h1>
-        <p className="page-description">
-          Explore our collection of meals or create your own
-        </p>
+        <p className="page-description">Create your own meal library</p>
 
         <div className="top-controls">
           <div className="date-picker-container">
@@ -675,7 +675,7 @@ const MealPlanPage = () => {
                     >
                       {isMealCompleted(meal.id)
                         ? "Marked as Eaten"
-                        : "Add To Meals Eaten Today"}
+                        : "Add To Meals Eaten"}
                     </button>
 
                     <button
