@@ -21,6 +21,7 @@ export default function WorkoutsPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editingWorkoutId, setEditingWorkoutId] = useState(null);
+  const [workoutType, setWorkoutType] = useState("completed"); // 'completed' or 'scheduled'
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -49,7 +50,7 @@ export default function WorkoutsPage() {
       setUserWorkouts([]);
       setCompletedWorkouts([]);
     }
-  }, [user, selectedDate]);
+  }, [user, selectedDate, workoutType]);
 
   useEffect(() => {
     if (user) {
@@ -386,6 +387,26 @@ export default function WorkoutsPage() {
     setSelectedDate(e.target.value);
   };
 
+  // Calculate if selected date is in the future
+  const isFutureDate = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time part for accurate comparison
+    const selected = new Date(selectedDate);
+    return selected > today;
+  };
+
+  // Set the maximum allowed date (can be adjusted as needed)
+  const getMaxDate = () => {
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1); // Allow scheduling up to 1 year in advance
+    return maxDate.toISOString().split("T")[0];
+  };
+
+  // Toggle between "Completed" and "Scheduled" views
+  const toggleWorkoutType = () => {
+    setWorkoutType(workoutType === "completed" ? "scheduled" : "completed");
+  };
+
   return (
     <div className="workout-page">
       <NavBar />
@@ -397,13 +418,15 @@ export default function WorkoutsPage() {
 
           <div className="workout-actions">
             <div className="date-picker-container">
-              <label htmlFor="workout-date">Training Date:</label>
+              <label htmlFor="workout-date">
+                {isFutureDate() ? "Schedule For:" : "Training Date:"}
+              </label>
               <input
                 type="date"
                 id="workout-date"
                 value={selectedDate}
                 onChange={handleDateChange}
-                max={new Date().toISOString().split("T")[0]} // Prevent selecting future dates
+                max={getMaxDate()} // Allow future dates up to 1 year
               />
             </div>
 
@@ -478,9 +501,13 @@ export default function WorkoutsPage() {
                       className={`add-to-plan-button ${isWorkoutCompleted(workout.id) ? "completed" : ""}`}
                       onClick={() => toggleWorkoutCompletion(workout.id)}
                     >
-                      {isWorkoutCompleted(workout.id)
-                        ? "Marked as Completed"
-                        : "Add To Completed Workouts"}
+                      {isFutureDate()
+                        ? isWorkoutCompleted(workout.id)
+                          ? "Scheduled"
+                          : "Schedule Workout"
+                        : isWorkoutCompleted(workout.id)
+                          ? "Marked as Completed"
+                          : "Add To Completed Workouts"}
                     </button>
 
                     <button

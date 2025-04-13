@@ -160,27 +160,19 @@ export default function ProfilePage() {
   };
 
   const goToNextDate = () => {
-    // Don't allow navigating to future dates
-    const today = new Date();
-
+    // Remove the restriction on future dates
     if (viewMode === "day") {
       const nextDate = new Date(selectedDate);
       nextDate.setDate(selectedDate.getDate() + 1);
-      if (nextDate <= today) {
-        setSelectedDate(nextDate);
-      }
+      setSelectedDate(nextDate);
     } else if (viewMode === "week") {
       const nextWeek = new Date(selectedDate);
       nextWeek.setDate(selectedDate.getDate() + 7);
-      if (nextWeek <= today) {
-        setSelectedDate(nextWeek);
-      }
+      setSelectedDate(nextWeek);
     } else if (viewMode === "month") {
       const nextMonth = new Date(selectedDate);
       nextMonth.setMonth(selectedDate.getMonth() + 1);
-      if (nextMonth <= today) {
-        setSelectedDate(nextMonth);
-      }
+      setSelectedDate(nextMonth);
     }
   };
 
@@ -194,8 +186,16 @@ export default function ProfilePage() {
   };
 
   const formatDateRange = () => {
+    // Check if the selected date is in the future
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time for accurate comparison
+    const isFuture = selectedDate > today;
+
+    // Add a "Scheduled" prefix for future dates
+    const futurePrefix = isFuture ? "Scheduled: " : "";
+
     if (viewMode === "day") {
-      return formatDate(selectedDate);
+      return `${futurePrefix}${formatDate(selectedDate)}`;
     } else if (viewMode === "week") {
       const startOfWeek = new Date(selectedDate);
       startOfWeek.setDate(selectedDate.getDate() - selectedDate.getDay());
@@ -203,12 +203,23 @@ export default function ProfilePage() {
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-      return `${startOfWeek.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${endOfWeek.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+      const weekIsFuture = startOfWeek > today;
+      const weekFuturePrefix = weekIsFuture ? "Scheduled: " : "";
+
+      return `${weekFuturePrefix}${startOfWeek.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${endOfWeek.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
     } else if (viewMode === "month") {
-      return selectedDate.toLocaleDateString("en-US", {
+      const monthStart = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        1,
+      );
+      const monthIsFuture = monthStart > today;
+      const monthFuturePrefix = monthIsFuture ? "Scheduled: " : "";
+
+      return `${monthFuturePrefix}${selectedDate.toLocaleDateString("en-US", {
         month: "long",
         year: "numeric",
-      });
+      })}`;
     }
   };
 
@@ -294,7 +305,6 @@ export default function ProfilePage() {
       });
   };
 
-  // Render day view of completed workouts
   const renderDayWorkouts = () => {
     if (loadingWorkouts) {
       return (
@@ -305,10 +315,19 @@ export default function ProfilePage() {
       );
     }
 
+    // Check if this is a future date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isFutureDate = new Date(selectedDate) > today;
+
     if (completedWorkouts.length === 0) {
       return (
         <div className="no-workouts">
-          <p>No workouts completed on this day.</p>
+          <p>
+            {isFutureDate
+              ? "No workouts scheduled for this day."
+              : "No workouts completed on this day."}
+          </p>
         </div>
       );
     }
@@ -320,11 +339,15 @@ export default function ProfilePage() {
             <div className="completed-workout-info">
               <h3>{workout.workout_name}</h3>
               <p className="completion-time">
-                Completed:{" "}
+                {isFutureDate ? "Scheduled for: " : "Completed: "}
                 {new Date(workout.completed_date).toLocaleDateString()}
               </p>
             </div>
-            <div className="completion-badge">✓</div>
+            <div
+              className={`completion-badge ${isFutureDate ? "scheduled" : ""}`}
+            >
+              {isFutureDate ? "⏰" : "✓"}
+            </div>
           </div>
         ))}
       </div>
@@ -600,16 +623,8 @@ export default function ProfilePage() {
                       &larr;
                     </button>
                     <h3 className="date-display">{formatDateRange()}</h3>
-                    <button
-                      className="date-nav-btn"
-                      onClick={goToNextDate}
-                      disabled={
-                        viewMode === "day"
-                          ? selectedDate.toDateString() ===
-                            new Date().toDateString()
-                          : false
-                      }
-                    >
+                    {/* Replace the existing "next" navigation button with this one */}
+                    <button className="date-nav-btn" onClick={goToNextDate}>
                       &rarr;
                     </button>
                   </div>
