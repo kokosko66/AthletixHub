@@ -93,7 +93,6 @@ const MealPlanPage = () => {
     }
   };
 
-  // In the createMealPlan function - now associates meal with user
   const createMealPlan = async (mealName) => {
     try {
       // Format the date properly for MySQL
@@ -103,7 +102,7 @@ const MealPlanPage = () => {
       const mealData = {
         name: mealName,
         created_at: formattedDate,
-        user_id: user.id, // Associate meal with the current user
+        user_id: user.id, // Include the user ID
       };
 
       console.log("Creating meal plan with data:", mealData);
@@ -330,6 +329,12 @@ const MealPlanPage = () => {
       return;
     }
 
+    // Check if user is logged in
+    if (!user || !user.id) {
+      setErrorMessage("You must be logged in to create a meal plan");
+      return;
+    }
+
     setErrorMessage("");
     setLoading(true);
 
@@ -357,7 +362,7 @@ const MealPlanPage = () => {
         }
       }
 
-      // Step 3: Refresh meals list for the current user
+      // Step 3: Refresh meals list for the current user only
       const mealsResponse = await axios.get(
         `http://localhost:3000/api/meal_plans/user/${user.id}`,
       );

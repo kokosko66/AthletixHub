@@ -35,9 +35,24 @@ export const getMealPlanById = async (req, res) => {
 export const getMealPlanByName = async (req, res) => {
   try {
     const { name } = req.params;
-    const [rows] = await pool.query(queries.getMealPlanByName, [name]);
+    const [rows] = await pool.query("SELECT * FROM MealPlans WHERE name = ?", [
+      name,
+    ]);
     res.json(rows);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get meal plans for a specific user
+export const getMealPlansByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const query = "SELECT * FROM MealPlans WHERE user_id = ?";
+    const [rows] = await pool.query(query, [userId]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching meal plans by user ID:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -61,18 +76,25 @@ export const getMealPlanFoods = async (req, res) => {
   }
 };
 
-// Only update the addMealPlan function in meal_plans/controller.js
-
+// Modify existing addMealPlan function to include user_id
 export const addMealPlan = async (req, res) => {
   try {
-    const { name, created_at } = req.body;
+    const { name, created_at, user_id } = req.body;
 
-    // Use the `insertId` from the query result to return the ID of the new meal plan
-    const [result] = await pool.query(queries.addMealPlan, [name, created_at]);
+    // Make sure user_id is provided
+    if (!user_id) {
+      return res.status(400).json({ error: "user_id is required" });
+    }
+
+    // Add the meal plan with user_id
+    const [result] = await pool.query(
+      "INSERT INTO MealPlans (name, created_at, user_id) VALUES (?, ?, ?)",
+      [name, created_at, user_id],
+    );
 
     res.status(201).json({
       message: "Meal Plan added successfully",
-      id: result.insertId, // Return the ID of the newly created meal plan
+      id: result.insertId,
     });
   } catch (error) {
     console.error("Error adding meal plan:", error);
@@ -83,12 +105,39 @@ export const addMealPlan = async (req, res) => {
 export const updateMealPlan = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
-    const [result] = await pool.query(queries.updateMealPlan, [name, id]);
-    if (result.affectedRows === 0)
+    const { name, user_id } = req.body;
+
+    // First check if the meal plan belongs to this user
+    const [mealPlan] = await pool.query(
+      "SELECT * FROM MealPlans WHERE id = ?",
+      [id],
+    );
+
+    if (mealPlan.length === 0) {
       return res.status(404).json({ message: "Meal Plan not found" });
+    }
+
+    if (user_id && mealPlan[0].user_id !== parseInt(user_id)) {
+      return res
+        .status(403)
+        .json({
+          message: "You do not have permission to update this meal plan",
+        });
+    }
+
+    // Now update the meal plan
+    const [result] = await pool.query(
+      "UPDATE MealPlans SET name = ? WHERE id = ?",
+      [name, id],
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Meal Plan not found" });
+    }
+
     res.json({ message: "Meal Plan updated successfully" });
   } catch (error) {
+    console.error("Error updating meal plan:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -97,6 +146,23 @@ export const updateMealPlan = async (req, res) => {
 export const deleteMealPlan = async (req, res) => {
   try {
     const { id } = req.params;
+    const { user_id } = req.body;
+
+    // First check if the meal plan belongs to this user
+    if (user_id) {
+      const [mealPlan] = await pool.query(
+        "SELECT * FROM MealPlans WHERE id = ?",
+        [id],
+      );
+
+      if (mealPlan.length > 0 && mealPlan[0].user_id !== parseInt(user_id)) {
+        return res
+          .status(403)
+          .json({
+            message: "You do not have permission to delete this meal plan",
+          });
+      }
+    }
 
     // 1. First, delete related records from MealPlanFoods
     try {
@@ -121,12 +187,17 @@ export const deleteMealPlan = async (req, res) => {
     }
 
     // 3. Finally, delete the meal plan
-    const [result] = await pool.query("DELETE FROM MealPlans WHERE id = ?", [
-      id,
-    ]);
+    const deleteQuery = user_id
+      ? "DELETE FROM MealPlans WHERE id = ? AND user_id = ?"
+      : "DELETE FROM MealPlans WHERE id = ?";
+
+    const params = user_id ? [id, user_id] : [id];
+    const [result] = await pool.query(deleteQuery, params);
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Meal Plan not found" });
+      return res
+        .status(404)
+        .json({ message: "Meal Plan not found or you do not have permission" });
     }
 
     res.json({ message: "Meal Plan deleted successfully" });
