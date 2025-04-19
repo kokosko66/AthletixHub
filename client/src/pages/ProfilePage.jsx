@@ -315,7 +315,6 @@ export default function ProfilePage() {
       );
     }
 
-    // Check if this is a future date
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const isFutureDate = new Date(selectedDate) > today;
@@ -354,7 +353,6 @@ export default function ProfilePage() {
     );
   };
 
-  // Render week/month view of completed workouts
   const renderCalendarView = () => {
     if (loadingWorkouts) {
       return (
@@ -366,18 +364,17 @@ export default function ProfilePage() {
     }
 
     if (viewMode === "week") {
-      // Group workouts by day of the week
       const days = [
-        "Sunday",
         "Monday",
         "Tuesday",
         "Wednesday",
         "Thursday",
         "Friday",
         "Saturday",
+        "Sunday",
       ];
       const dayStart = new Date(selectedDate);
-      dayStart.setDate(dayStart.getDate() - dayStart.getDay()); // Start with Sunday
+      dayStart.setDate(dayStart.getDate() - dayStart.getDay());
 
       return (
         <div className="week-view">
@@ -636,7 +633,6 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                {/* Stats card - can be used later for workout analytics */}
                 <div className="dashboard-card workout-stats-card">
                   <h2>Workout Statistics</h2>
                   <div className="stats-container">
