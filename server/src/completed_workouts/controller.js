@@ -115,3 +115,49 @@ export const deleteCompletedWorkout = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Add this to server/src/completed_workouts/controller.js
+
+export const getScheduledWorkoutsByDateRange = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { startDate, endDate } = req.query;
+
+    // Get scheduled workouts (workouts assigned to the user but not in CompletedWorkouts)
+    const query = `
+      SELECT uw.workout_id, w.name as workout_name, uw.scheduled_date
+      FROM UserWorkouts uw
+      JOIN Workouts w ON uw.workout_id = w.id
+      WHERE uw.user_id = ?
+      AND uw.scheduled_date BETWEEN ? AND ?
+      AND NOT EXISTS (
+        SELECT 1 FROM CompletedWorkouts cw
+        WHERE cw.user_id = uw.user_id
+        AND cw.workout_id = uw.workout_id
+        AND cw.completed_date = uw.scheduled_date
+      )
+    `;
+
+    const [rows] = await pool.query(query, [userId, startDate, endDate]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching scheduled workouts:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Alternative implementation if your UserWorkouts table doesn't have scheduled_date
+// This is a fallback if the above query doesn't work with your database schema
+export const getScheduledWorkoutsByDateRangeAlternative = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { startDate, endDate } = req.query;
+
+    // In this case, we'll just return a count of 0 for now
+    // You would need to adjust your database schema to properly track scheduled workouts
+    res.json([]);
+  } catch (error) {
+    console.error("Error fetching scheduled workouts:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
